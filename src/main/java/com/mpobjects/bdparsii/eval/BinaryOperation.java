@@ -10,7 +10,6 @@ package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 

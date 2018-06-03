@@ -14,21 +14,16 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.mpobjects.bdparsii.eval.Expression;
 import com.mpobjects.bdparsii.eval.Function;
-import com.mpobjects.bdparsii.eval.Functions;
 import com.mpobjects.bdparsii.eval.Parser;
 import com.mpobjects.bdparsii.eval.Scope;
 import com.mpobjects.bdparsii.eval.Variable;
 import com.mpobjects.bdparsii.tokenizer.ParseException;
-
-import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * Tests the {@link Parser} class.
