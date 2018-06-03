@@ -9,6 +9,10 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * Represents a binary operation.
@@ -134,7 +138,7 @@ public class BinaryOperation extends Expression {
             case DIVIDE:
                 return a.divide(b);
             case POWER:
-                return a.pow(b.intValueExact());
+                return BigDecimalMath.pow(a, b, MathContext.DECIMAL64);
             case MODULO:
                 return a.remainder(b);
             case LT:

@@ -38,7 +38,7 @@ public class Functions {
     public static final Function SIN = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.sin(a, MathContext.UNLIMITED);
+            return BigDecimalMath.sin(a, newMC(a));
         }
     };
 
@@ -48,7 +48,7 @@ public class Functions {
     public static final Function SINH = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.sinh(a, MathContext.UNLIMITED);
+            return BigDecimalMath.sinh(a, newMC(a));
         }
     };
 
@@ -58,7 +58,7 @@ public class Functions {
     public static final Function COS = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.cos(a, MathContext.UNLIMITED);
+            return BigDecimalMath.cos(a, newMC(a));
         }
     };
 
@@ -68,7 +68,7 @@ public class Functions {
     public static final Function COSH = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.cosh(a, MathContext.UNLIMITED);
+            return BigDecimalMath.cosh(a, newMC(a));
         }
     };
 
@@ -78,7 +78,7 @@ public class Functions {
     public static final Function TAN = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.tan(a, MathContext.UNLIMITED);
+            return BigDecimalMath.tan(a, newMC(a));
         }
     };
 
@@ -88,7 +88,7 @@ public class Functions {
     public static final Function TANH = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.tanh(a, MathContext.UNLIMITED);
+            return BigDecimalMath.tanh(a, newMC(a));
         }
     };
 
@@ -108,7 +108,7 @@ public class Functions {
     public static final Function ASIN = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.asin(a, MathContext.UNLIMITED);
+            return BigDecimalMath.asin(a, newMC(a));
         }
     };
 
@@ -118,7 +118,7 @@ public class Functions {
     public static final Function ACOS = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.acos(a, MathContext.UNLIMITED);
+            return BigDecimalMath.acos(a, newMC(a));
         }
     };
 
@@ -128,7 +128,7 @@ public class Functions {
     public static final Function ATAN = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.atan(a, MathContext.UNLIMITED);
+            return BigDecimalMath.atan(a, newMC(a));
         }
     };
 
@@ -138,7 +138,7 @@ public class Functions {
     public static final Function ATAN2 = new BinaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a, BigDecimal b) {
-            return BigDecimalMath.atan2(a, b, MathContext.UNLIMITED);
+            return BigDecimalMath.atan2(a, b, newMC(a));
         }
     };
 
@@ -148,7 +148,7 @@ public class Functions {
     public static final Function ROUND = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return a.setScale(0, RoundingMode.HALF_UP);
+            return a.setScale(0, RoundingMode.HALF_EVEN);
         }
     };
 
@@ -178,7 +178,7 @@ public class Functions {
     public static final Function POW = new BinaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a, BigDecimal b) {
-            return BigDecimalMath.pow(a, b, MathContext.UNLIMITED);
+            return BigDecimalMath.pow(a, b, newMC(a));
         }
     };
 
@@ -188,7 +188,7 @@ public class Functions {
     public static final Function SQRT = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.sqrt(a, MathContext.UNLIMITED);
+            return BigDecimalMath.sqrt(a, newMC(a));
         }
     };
 
@@ -198,7 +198,7 @@ public class Functions {
     public static final Function EXP = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.exp(a, MathContext.UNLIMITED);
+            return BigDecimalMath.exp(a, newMC(a));
         }
     };
 
@@ -208,7 +208,7 @@ public class Functions {
     public static final Function LN = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.log(a, MathContext.UNLIMITED);
+            return BigDecimalMath.log(a, newMC(a));
         }
     };
 
@@ -218,7 +218,7 @@ public class Functions {
     public static final Function LOG = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a) {
-            return BigDecimalMath.log10(a, MathContext.UNLIMITED);
+            return BigDecimalMath.log10(a, newMC(a));
         }
     };
 
@@ -290,6 +290,14 @@ public class Functions {
      */
     public static final Function IF = new IfFunction();
 
+    /**
+     * Provides access to the scale of the current value.
+     * <p>
+     * Called with a single argument it returns the scale of the provided value. Called with two arguments it
+     * returns a value with the scale set to the second argument.
+     */
+    public static final Function SCALE = new ScaleFunction();
+
     private Functions() {
     }
 
@@ -316,5 +324,45 @@ public class Functions {
         public boolean isNaturalFunction() {
             return false;
         }
+    }
+
+    private static class ScaleFunction implements Function {
+
+        @Override
+        public int getNumberOfArguments() {
+            return -1;
+        }
+
+        @Override
+        public BigDecimal eval(List<Expression> args) {
+            if (args.size() == 1) {
+                BigDecimal val = args.get(0).evaluate();
+                if (val == null) {
+                    throw new ArithmeticException("Parameter 1 evaluated to null");
+                }
+                return BigDecimal.valueOf(val.scale());
+            } else if (args.size() == 2) {
+                BigDecimal val = args.get(0).evaluate();
+                if (val == null) {
+                    throw new ArithmeticException("Parameter 1 evaluated to null");
+                }
+                BigDecimal scale = args.get(1).evaluate();
+                if (scale == null) {
+                    throw new ArithmeticException("Parameter 2 evaluated to null");
+                }
+                return val.setScale(scale.intValueExact(), RoundingMode.HALF_EVEN);
+            } else {
+                throw new ArithmeticException("Unsupported number of arguments: " + args.size());
+            }
+        }
+
+        @Override
+        public boolean isNaturalFunction() {
+            return true;
+        }
+    }
+
+    private static MathContext newMC(BigDecimal value) {
+        return new MathContext(value.precision(), RoundingMode.HALF_EVEN);
     }
 }

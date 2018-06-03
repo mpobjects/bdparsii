@@ -8,20 +8,27 @@
 
 package com.mpobjects.bdparsii;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.List;
+
 import org.junit.Test;
 
-import com.mpobjects.bdparsii.eval.BinaryOperation;
 import com.mpobjects.bdparsii.eval.Expression;
 import com.mpobjects.bdparsii.eval.Function;
+import com.mpobjects.bdparsii.eval.Functions;
 import com.mpobjects.bdparsii.eval.Parser;
 import com.mpobjects.bdparsii.eval.Scope;
 import com.mpobjects.bdparsii.eval.Variable;
 import com.mpobjects.bdparsii.tokenizer.ParseException;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * Tests the {@link Parser} class.
@@ -100,7 +107,16 @@ public class ParserTest {
 
     @Test
     public void trailingDecimalPoint() throws ParseException {
-        assertEquals(BigDecimal.valueOf(2.), Parser.parse("2.").evaluate());
+        assertEquals(BigDecimal.valueOf(2), Parser.parse("2.").evaluate());
+    }
+
+    @Test
+    public void scale() throws ParseException {
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1").evaluate());
+        assertEquals(BigDecimal.valueOf(1).setScale(1), Parser.parse("1.0").evaluate());
+        assertEquals(BigDecimal.valueOf(1).setScale(2), Parser.parse("1.00").evaluate());
+        assertEquals(BigDecimal.valueOf(1).setScale(10), Parser.parse("1.0000000000").evaluate());
+        assertEquals(BigDecimal.valueOf(1).setScale(10), Parser.parse("0.5000000000 + 0.5").evaluate());
     }
 
     @Test
@@ -128,8 +144,8 @@ public class ParserTest {
 
     @Test
     public void functions() throws ParseException {
-        assertEquals(BigDecimal.valueOf(0), Parser.parse("1 + sin(-pi) + cos(pi)").evaluate());
-        assertEquals(BigDecimal.valueOf(4.72038341576), Parser.parse("tan(sqrt(euler ^ (pi * 3)))").evaluate());
+        assertEquals(BigDecimal.valueOf(0).setScale(10), Parser.parse("1 + scale(sin(-pi), 10) + scale(cos(pi), 10)").evaluate());
+        assertEquals(new BigDecimal("4.720383415756170"), Parser.parse("tan(sqrt(euler ^ (pi * 3)))").evaluate());
         assertEquals(BigDecimal.valueOf(3), Parser.parse("| 3 - 6 |").evaluate());
         assertEquals(BigDecimal.valueOf(3), Parser.parse("if(3 > 2 && 2 < 3, 2+1, 1+1)").evaluate());
         assertEquals(BigDecimal.valueOf(2), Parser.parse("if(3 < 2 || 2 > 3, 2+1, 1+1)").evaluate());
@@ -144,7 +160,7 @@ public class ParserTest {
 
             @Override
             public BigDecimal eval(List<Expression> args) {
-            	BigDecimal avg = BigDecimal.ZERO;
+                BigDecimal avg = BigDecimal.ZERO;
                 if (args.isEmpty()) {
                     return avg;
                 }

@@ -18,11 +18,6 @@ public class Constant extends Expression {
 
     private BigDecimal value;
 
-    /**
-     * Used as dummy expression by the parser if an error occurs while parsing.
-     */
-    public static final Constant EMPTY = new Constant(null);
-
     public Constant(BigDecimal value) {
         this.value = value;
     }

@@ -30,8 +30,7 @@ import com.mpobjects.bdparsii.tokenizer.Tokenizer;
  * <p>
  * This is a recursive descending parser which has a method per non-terminal.
  * <p>
- * Using this parser is as easy as:
- * {@code
+ * Using this parser is as easy as: {@code
  * Scope scope = Scope.create();
  * Variable a = scope.getVariable("a");
  * Expression expr = Parser.parse("3 + a * 4");
@@ -80,7 +79,18 @@ public class Parser {
         registerFunction("rnd", Functions.RND);
         registerFunction("sign", Functions.SIGN);
         registerFunction("if", Functions.IF);
+        registerFunction("scale", Functions.SCALE);
     }
+
+    /**
+     * Used when the parser encountered an error
+     */
+    private static final Expression ERROR = new Expression() {
+        @Override
+        public BigDecimal evaluate() {
+            return null;
+        }
+    };
 
     protected Parser(Reader input, Scope scope) {
         this.scope = scope;
@@ -93,8 +103,8 @@ public class Parser {
      * <p>
      * A function must be registered before an expression is parsed in order to be visible.
      *
-     * @param name     the name of the function. If a function with the same name is already available, it will be
-     *                 overridden
+     * @param name the name of the function. If a function with the same name is already available, it will be
+     *            overridden
      * @param function the function which is invoked as an expression is evaluated
      */
     public static void registerFunction(String name, Function function) {
@@ -161,9 +171,8 @@ public class Parser {
         Expression result = expression().simplify();
         if (tokenizer.current().isNotEnd()) {
             Token token = tokenizer.consume();
-            errors.add(ParseError.error(token,
-                                        String.format("Unexpected token: '%s'. Expected an expression.",
-                                                      token.getSource())));
+            errors.add(ParseError
+                    .error(token, String.format("Unexpected token: '%s'. Expected an expression.", token.getSource())));
         }
         if (!errors.isEmpty()) {
             throw ParseException.create(errors);
@@ -197,8 +206,8 @@ public class Parser {
     /**
      * Parser rule for parsing a relational expression.
      * <p>
-     * A relational expression is a <tt>term</tt> which might be followed by a relational operator
-     * (&lt;,&lt;=,...,&gt;) and another <tt>relationalExpression</tt>.
+     * A relational expression is a <tt>term</tt> which might be followed by a relational operator (&lt;,&lt;=,...,&gt;)
+     * and another <tt>relationalExpression</tt>.
      *
      * @return a relational expression parsed from the given input
      */
@@ -339,8 +348,8 @@ public class Parser {
     /**
      * Parser rule for parsing an atom.
      * <p>
-     * An atom is either a numeric constant, an <tt>expression</tt> in brackets, an <tt>expression</tt> surrounded by
-     * | to signal the absolute function, an identifier to signal a variable reference or an identifier followed by a
+     * An atom is either a numeric constant, an <tt>expression</tt> in brackets, an <tt>expression</tt> surrounded by |
+     * to signal the absolute function, an identifier to signal a variable reference or an identifier followed by a
      * bracket to signal a function call.
      *
      * @return an atom parsed from the given input
@@ -348,7 +357,8 @@ public class Parser {
     protected Expression atom() {
         if (tokenizer.current().isSymbol("-")) {
             tokenizer.consume();
-            BinaryOperation result = new BinaryOperation(BinaryOperation.Op.SUBTRACT, new Constant(BigDecimal.ZERO), atom());
+            BinaryOperation result = new BinaryOperation(BinaryOperation.Op.SUBTRACT, new Constant(BigDecimal.ZERO),
+                    atom());
             result.seal();
             return result;
         }
@@ -435,10 +445,9 @@ public class Parser {
             return new Constant(value);
         }
         Token token = tokenizer.consume();
-        errors.add(ParseError.error(token,
-                                    String.format("Unexpected token: '%s'. Expected an expression.",
-                                                  token.getSource())));
-        return Constant.EMPTY;
+        errors.add(ParseError
+                .error(token, String.format("Unexpected token: '%s'. Expected an expression.", token.getSource())));
+        return ERROR;
     }
 
     /**
@@ -463,16 +472,16 @@ public class Parser {
         }
         expect(Token.TokenType.SYMBOL, ")");
         if (fun == null) {
-            return Constant.EMPTY;
+            return ERROR;
         }
         if (call.getParameters().size() != fun.getNumberOfArguments() && fun.getNumberOfArguments() >= 0) {
-            errors.add(ParseError.error(funToken,
-                                        String.format(
-                                                "Number of arguments for function '%s' do not match. Expected: %d, Found: %d",
-                                                funToken.getContents(),
-                                                fun.getNumberOfArguments(),
-                                                call.getParameters().size())));
-            return Constant.EMPTY;
+            errors.add(ParseError
+                    .error(funToken,
+                           String.format("Number of arguments for function '%s' do not match. Expected: %d, Found: %d",
+                                         funToken.getContents(),
+                                         fun.getNumberOfArguments(),
+                                         call.getParameters().size())));
+            return ERROR;
         }
         return call;
     }
@@ -480,10 +489,10 @@ public class Parser {
     /**
      * Signals that the given token is expected.
      * <p>
-     * If the current input is pointing at the specified token, it will be consumed. If not, an error will be added
-     * to the error list and the input remains unchanged.
+     * If the current input is pointing at the specified token, it will be consumed. If not, an error will be added to
+     * the error list and the input remains unchanged.
      *
-     * @param type    the type of the expected token
+     * @param type the type of the expected token
      * @param trigger the trigger of the expected token
      */
     protected void expect(Token.TokenType type, String trigger) {
