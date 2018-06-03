@@ -39,5 +39,5 @@ parsii is available under:
 	<groupId>com.mpobjects</groupId>
 	<artifactId>bdparsii</artifactId>
 	<version>?.?</version>
-	</dependency>
+</dependency>
 ```
