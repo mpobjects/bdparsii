@@ -11,8 +11,8 @@ package com.mpobjects.bdparsii.tokenizer;
 /**
  * Represents a single character read from a {@link LookaheadReader}.
  * <p>
- * Provides the value as well as an exact position of the character in the stream. Also some test methods are
- * provided to determine the character class of the internal value.
+ * Provides the value as well as an exact position of the character in the stream. Also some test methods are provided
+ * to determine the character class of the internal value.
  *
  * @see LookaheadReader
  */
@@ -85,8 +85,7 @@ public class Char implements Position {
     /**
      * Determines if this instance represents the end of input indicator
      *
-     * @return <tt>true</tt> if this instance represents the end of the underlying input,
-     * <tt>false</tt> otherwise
+     * @return <tt>true</tt> if this instance represents the end of the underlying input, <tt>false</tt> otherwise
      */
     public boolean isEndOfInput() {
         return value == '\0';

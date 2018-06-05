@@ -15,8 +15,8 @@ import java.io.Reader;
 /**
  * An efficient reader of character streams, reading character by character and supporting lookaheads.
  * <p>
- * Helps to read characters from a {@link Reader} one after another. Using <tt>next</tt>, upcoming characters can
- * be inspected without consuming (removing) the current one.
+ * Helps to read characters from a {@link Reader} one after another. Using <tt>next</tt>, upcoming characters can be
+ * inspected without consuming (removing) the current one.
  */
 public class LookaheadReader extends Lookahead<Char> {
 
@@ -27,8 +27,8 @@ public class LookaheadReader extends Lookahead<Char> {
     /**
      * Creates a new LookaheadReader for the given Reader.
      * <p>
-     * Internally a {@link BufferedReader} is used to efficiently read single characters. The given reader will not
-     * be closed by this class.
+     * Internally a {@link BufferedReader} is used to efficiently read single characters. The given reader will not be
+     * closed by this class.
      *
      * @param input the reader to draw the input from
      */

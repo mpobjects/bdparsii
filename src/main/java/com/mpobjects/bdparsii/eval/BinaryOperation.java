@@ -27,8 +27,8 @@ public class BinaryOperation extends Expression {
      * Enumerates the operations supported by this expression.
      */
     public enum Op {
-        ADD(3), SUBTRACT(3), MULTIPLY(4), DIVIDE(4), MODULO(4), POWER(5), LT(2), LT_EQ(2), EQ(2), GT_EQ(2), GT(2), NEQ(2), AND(
-                1), OR(1);
+        ADD(3), SUBTRACT(3), MULTIPLY(4), DIVIDE(4), MODULO(4), POWER(5), LT(2), LT_EQ(2), EQ(2), GT_EQ(2), GT(2),
+        NEQ(2), AND(1), OR(1);
 
         private final int priority;
 
@@ -49,8 +49,8 @@ public class BinaryOperation extends Expression {
     /**
      * Creates a new binary operator for the given operator and operands.
      *
-     * @param op    the operator of the operation
-     * @param left  the left operand
+     * @param op the operator of the operation
+     * @param left the left operand
      * @param right the right operand
      */
     public BinaryOperation(Op op, Expression left, Expression right) {
@@ -107,15 +107,15 @@ public class BinaryOperation extends Expression {
     /**
      * Determines if the operation is sealed and operands must not be re-ordered.
      *
-     * @return <tt>true</tt> if the operation is protected by braces and operands might not be exchanged with
-     * operations nearby.
+     * @return <tt>true</tt> if the operation is protected by braces and operands might not be exchanged with operations
+     *         nearby.
      */
     public boolean isSealed() {
         return sealed;
     }
 
     @Override
-    @SuppressWarnings({"squid:S3776", "squid:MethodCyclomaticComplexity"})
+    @SuppressWarnings({ "squid:S3776", "squid:MethodCyclomaticComplexity" })
     public BigDecimal evaluate() {
         BigDecimal a = left.evaluate();
         BigDecimal b = right.evaluate();
@@ -153,9 +153,11 @@ public class BinaryOperation extends Expression {
             case NEQ:
                 return a.compareTo(b) != 0 ? BigDecimal.ONE : BigDecimal.ZERO;
             case AND:
-                return a.compareTo(BigDecimal.ZERO) != 0 && b.compareTo(BigDecimal.ZERO) != 0 ? BigDecimal.ONE : BigDecimal.ZERO;
+                return a.compareTo(BigDecimal.ZERO) != 0 && b.compareTo(BigDecimal.ZERO) != 0 ? BigDecimal.ONE
+                        : BigDecimal.ZERO;
             case OR:
-                return a.compareTo(BigDecimal.ZERO) != 0 || b.compareTo(BigDecimal.ZERO) != 0 ? BigDecimal.ONE : BigDecimal.ZERO;
+                return a.compareTo(BigDecimal.ZERO) != 0 || b.compareTo(BigDecimal.ZERO) != 0 ? BigDecimal.ONE
+                        : BigDecimal.ZERO;
             default:
                 throw new UnsupportedOperationException(String.valueOf(op));
         }

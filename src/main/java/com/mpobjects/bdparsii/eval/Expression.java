@@ -37,7 +37,7 @@ public abstract class Expression {
      * Determines the this expression is constant
      *
      * @return <tt>true</tt> if the result of evaluate will never change and does not depend on external state like
-     * variables
+     *         variables
      */
     public boolean isConstant() {
         return false;

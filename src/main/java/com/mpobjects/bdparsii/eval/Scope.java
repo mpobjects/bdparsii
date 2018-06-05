@@ -20,11 +20,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Contains a mapping of names to variables.
  * <p>
- * Both the user as well as the {@link Parser} use a Scope to resolve a name into a {@link Variable}. In
- * contrast to a simple Map, this approach provides two advantages: It's usually faster, as the variable
- * only needs to be resolved once. Modifying it and especially reading it when evaluating an expression is as
- * cheap as a simple field access. The second advantage is that scopes can be chained. So variables can be either
- * shared by two expression or kept separate, if required.
+ * Both the user as well as the {@link Parser} use a Scope to resolve a name into a {@link Variable}. In contrast to a
+ * simple Map, this approach provides two advantages: It's usually faster, as the variable only needs to be resolved
+ * once. Modifying it and especially reading it when evaluating an expression is as cheap as a simple field access. The
+ * second advantage is that scopes can be chained. So variables can be either shared by two expression or kept separate,
+ * if required.
  */
 public class Scope {
     private Scope parent;
@@ -36,8 +36,8 @@ public class Scope {
     /**
      * Creates a new empty scope.
      * <p>
-     * The scope will not be completely empty, as {@link Math#PI} (pi) and {@link Math#E} (E) are always
-     * defined as constants.
+     * The scope will not be completely empty, as {@link Math#PI} (pi) and {@link Math#E} (E) are always defined as
+     * constants.
      * <p>
      * If an not yet known variable is accessed, it will be created and initialized with 0.
      */
@@ -73,7 +73,7 @@ public class Scope {
      * <p>
      * By default, scopes are not strict and will automatically create variables when first reuqested.
      *
-     * @param strictLookup <tt>true</tt> if the scope should be switched to strict lookup, <tt>false</tt>  otherwise
+     * @param strictLookup <tt>true</tt> if the scope should be switched to strict lookup, <tt>false</tt> otherwise
      * @return the instance itself for fluent method calls
      */
     public Scope withStrictLookup(boolean strictLookup) {
@@ -85,11 +85,11 @@ public class Scope {
     /**
      * Specifies the parent scope for this scope.
      * <p>
-     * If a scope cannot resolve a variable, it tries to resolve it using its parent scope. This permits to
-     * share a certain set of variables.
+     * If a scope cannot resolve a variable, it tries to resolve it using its parent scope. This permits to share a
+     * certain set of variables.
      *
      * @param parent the parent scope to use. If <tt>null</tt>, the common root scope is used which defines a bunch of
-     *               constants (e and pi).
+     * constants (e and pi).
      * @return the instance itself for fluent method calls
      */
     public Scope withParent(Scope parent) {
@@ -105,7 +105,7 @@ public class Scope {
     /**
      * Searches for a {@link Variable} with the given name.
      * <p>
-     * If the variable does not exist <tt>null</tt>  will be returned
+     * If the variable does not exist <tt>null</tt> will be returned
      *
      * @param name the name of the variable to search
      * @return the variable with the given name or <tt>null</tt> if no such variable was found
@@ -127,8 +127,8 @@ public class Scope {
      *
      * @param name the variable to look for
      * @return a variable with the given name
-     * @throws IllegalArgumentException if {@link #autocreateVariables} is <tt>false</tt> and the given
-     *                                  variable was not creted yet.
+     * @throws IllegalArgumentException if {@link #autocreateVariables} is <tt>false</tt> and the given variable was not
+     * creted yet.
      */
     public Variable getVariable(String name) {
         Variable result = find(name);
@@ -145,8 +145,8 @@ public class Scope {
     /**
      * Searches or creates a variable in this scope.
      * <p>
-     * Tries to find a variable with the given name in this scope. If no variable with the given name is found,
-     * the parent scope is not checked, but a new variable is created.
+     * Tries to find a variable with the given name in this scope. If no variable with the given name is found, the
+     * parent scope is not checked, but a new variable is created.
      *
      * @param name the variable to search or create
      * @return a variable with the given name from the local scope

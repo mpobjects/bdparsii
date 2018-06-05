@@ -293,8 +293,8 @@ public class Functions {
     /**
      * Provides access to the scale of the current value.
      * <p>
-     * Called with a single argument it returns the scale of the provided value. Called with two arguments it
-     * returns a value with the scale set to the second argument.
+     * Called with a single argument it returns the scale of the provided value. Called with two arguments it returns a
+     * value with the scale set to the second argument.
      */
     public static final Function SCALE = new ScaleFunction();
 

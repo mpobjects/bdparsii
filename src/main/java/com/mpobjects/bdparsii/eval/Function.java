@@ -21,11 +21,11 @@ public interface Function {
      * <p>
      * If the function is called with a different number of arguments, an error will be created
      * <p>
-     * In order to support functions with a variable number of arguments, a negative number can be returned.
-     * This will essentially disable the check.
+     * In order to support functions with a variable number of arguments, a negative number can be returned. This will
+     * essentially disable the check.
      *
-     * @return the number of arguments expected by this function or a negative number to indicate that this
-     * function accepts a variable number of arguments
+     * @return the number of arguments expected by this function or a negative number to indicate that this function
+     *         accepts a variable number of arguments
      */
     int getNumberOfArguments();
 
@@ -36,7 +36,7 @@ public interface Function {
      * evaluations.
      *
      * @param args the arguments for this function. The length of the given list will exactly match
-     *             <tt>getNumberOfArguments</tt>
+     *            <tt>getNumberOfArguments</tt>
      * @return the result of the function evaluated with the given arguments
      */
     BigDecimal eval(List<Expression> args);
@@ -44,8 +44,8 @@ public interface Function {
     /**
      * A natural function returns the same output for the same input.
      * <p>
-     * All classical mathematical functions are "natural". A function which reads user input is not natural, as
-     * the function might return different results depending on the users input
+     * All classical mathematical functions are "natural". A function which reads user input is not natural, as the
+     * function might return different results depending on the users input
      *
      * @return <tt>true</tt> if the function returns the same output for the same input, <tt>false</tt> otherwise
      */

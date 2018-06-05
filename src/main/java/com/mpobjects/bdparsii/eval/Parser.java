@@ -357,8 +357,9 @@ public class Parser {
     protected Expression atom() {
         if (tokenizer.current().isSymbol("-")) {
             tokenizer.consume();
-            BinaryOperation result = new BinaryOperation(BinaryOperation.Op.SUBTRACT, new Constant(BigDecimal.ZERO),
-                    atom());
+            BinaryOperation result = new BinaryOperation(BinaryOperation.Op.SUBTRACT,
+                                                         new Constant(BigDecimal.ZERO),
+                                                         atom());
             result.seal();
             return result;
         }

@@ -31,9 +31,8 @@ public abstract class Lookahead<T> {
     protected boolean endReached = false;
 
     /**
-     * Used to collect problems which occurred when processing the input. This is used instead of classic exceptions,
-     * so that errors can be recovered and we can continue to process to input to check for further errors or
-     * problems.
+     * Used to collect problems which occurred when processing the input. This is used instead of classic exceptions, so
+     * that errors can be recovered and we can continue to process to input to check for further errors or problems.
      */
     protected List<ParseError> problemCollector = new ArrayList<ParseError>();
 
@@ -46,8 +45,8 @@ public abstract class Lookahead<T> {
     /**
      * Returns the item the stream is currently pointing at.
      * <p>
-     * This method does not change the internal state. Therefore it can be called several times and will always
-     * return the same result.
+     * This method does not change the internal state. Therefore it can be called several times and will always return
+     * the same result.
      *
      * @return the item the stream is currently pointing at.
      */
@@ -58,8 +57,8 @@ public abstract class Lookahead<T> {
     /**
      * Returns the next item after the current one in the stream.
      * <p>
-     * This method does not change the internal state. Therefore it can be called several times and will always
-     * return the same result.
+     * This method does not change the internal state. Therefore it can be called several times and will always return
+     * the same result.
      *
      * @return the next item in the stream. This will be the current item, after a call to {@link #consume()}
      */
@@ -70,11 +69,11 @@ public abstract class Lookahead<T> {
     /**
      * Returns the next n-th item in the stream.
      * <p>
-     * Calling this method with 0 as parameter, will return the current item. Calling it with 1 will return the
-     * same item as a call to <tt>next()</tt>.
+     * Calling this method with 0 as parameter, will return the current item. Calling it with 1 will return the same
+     * item as a call to <tt>next()</tt>.
      * <p>
-     * This method does not change the internal state. Therefore it can be called several times and will always
-     * return the same result.
+     * This method does not change the internal state. Therefore it can be called several times and will always return
+     * the same result.
      *
      * @param offset the number of items to skip
      * @return the n-th item in the stream
@@ -119,8 +118,9 @@ public abstract class Lookahead<T> {
 
     /**
      * Removes and returns the current item from the stream.
-     * <p>After this method was called, all calls to {@link #current()} will then return the item, which
-     * was previously returned by {@link #next()}
+     * <p>
+     * After this method was called, all calls to {@link #current()} will then return the item, which was previously
+     * returned by {@link #next()}
      *
      * @return the item which is being removed from the stream
      */
@@ -160,7 +160,7 @@ public abstract class Lookahead<T> {
      * Provides access to the problem collector used by this instance.
      *
      * @return the problem collector used by this class. This returns the internally used list, therefore it should be
-     * treat appropriately
+     *         treat appropriately
      */
     public List<ParseError> getProblemCollector() {
         return problemCollector;

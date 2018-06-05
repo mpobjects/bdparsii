@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Used to signal that processing an input failed.
  * <p>
- * By first collecting as many {@link ParseError} instances as possible, this permits to provide good insights
- * of what is wrong with the input provided by the user.
+ * By first collecting as many {@link ParseError} instances as possible, this permits to provide good insights of what
+ * is wrong with the input provided by the user.
  */
 public class ParseException extends Exception {
 
@@ -37,9 +37,8 @@ public class ParseException extends Exception {
         if (errors.size() == 1) {
             return new ParseException(errors.get(0).getMessage(), errors);
         } else if (errors.size() > 1) {
-            return new ParseException(String.format("%d errors occured. First: %s",
-                                                    errors.size(),
-                                                    errors.get(0).getMessage()), errors);
+            return new ParseException(String
+                    .format("%d errors occured. First: %s", errors.size(), errors.get(0).getMessage()), errors);
         } else {
             return new ParseException("An unknown error occured", errors);
         }
