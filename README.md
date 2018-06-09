@@ -1,4 +1,4 @@
-# bdparsii
+# bdparsii [![Build Status](https://travis-ci.org/mpobjects/bdparsii.svg?branch=master)](https://travis-ci.org/mpobjects/bdparsii)
 
 
 A BigDecimal port of [Scireum's Parsii](https://github.com/scireum/parsii) library. 
