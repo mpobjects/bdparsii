@@ -1,5 +1,8 @@
-# bdparsii [![Build Status](https://travis-ci.org/mpobjects/bdparsii.svg?branch=master)](https://travis-ci.org/mpobjects/bdparsii)
+[![Build Status](https://travis-ci.org/mpobjects/bdparsii.svg?branch=master)](https://travis-ci.org/mpobjects/bdparsii)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mpobjects/bdparsii.svg)](http://www.maven.org/#search%7Cga%7C1%7Cg%3A%22com.mpobjects.formats%22%20AND%20a%3A%22bdparsii%22)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.mpobjects/bdparsii.svg)
 
+# bdparsii 
 
 A BigDecimal port of [Scireum's Parsii](https://github.com/scireum/parsii) library. 
 
