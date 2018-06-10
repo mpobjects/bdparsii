@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mpobjects</groupId>
 	<artifactId>bdparsii</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>BigDecimal Parsii</name>
 	<description>bdparsii is a super fast and lightweight parser and expression evaluator. It is the BigDecimal brother of parsii.</description>

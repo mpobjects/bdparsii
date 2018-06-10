@@ -41,6 +41,6 @@ parsii is available under:
 <dependency>
 	<groupId>com.mpobjects</groupId>
 	<artifactId>bdparsii</artifactId>
-	<version>?.?</version>
+	<version>0.1.0</version>
 </dependency>
 ```
