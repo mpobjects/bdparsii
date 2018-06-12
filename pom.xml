@@ -114,11 +114,11 @@
 				</executions>
 			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
 
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
@@ -170,7 +170,6 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<phase>process-test-sources</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -178,14 +177,6 @@
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.3.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<phase>site-deploy</phase>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
