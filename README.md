@@ -2,6 +2,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.mpobjects/bdparsii.svg)](http://www.maven.org/#search%7Cga%7C1%7Cg%3A%22com.mpobjects%22%20AND%20a%3A%22bdparsii%22)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.mpobjects/bdparsii.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/mpobjects/bdparsii/badge.svg)](https://snyk.io/test/github/mpobjects/bdparsii)
+[![Javadocs](https://www.javadoc.io/badge/com.mpobjects/bdparsii.svg)](https://www.javadoc.io/doc/com.mpobjects/bdparsii)
 
 # bdparsii 
 
