@@ -226,7 +226,7 @@
 													maven-checkstyle-plugin
 												</artifactId>
 												<versionRange>
-													[2.17,)
+													[2,)
 												</versionRange>
 												<goals>
 													<goal>checkstyle</goal>

@@ -14,7 +14,6 @@ import java.math.BigDecimal;
  * Represents a constant numeric expression.
  */
 public class Constant extends Expression {
-    private static final long serialVersionUID = 7461494011371773146L;
 
     private BigDecimal value;
 

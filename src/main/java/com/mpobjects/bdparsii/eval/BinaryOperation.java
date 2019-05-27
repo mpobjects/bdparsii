@@ -21,8 +21,6 @@ import ch.obermuhlner.math.big.BigDecimalMath;
  */
 public class BinaryOperation extends Expression {
 
-    private static final long serialVersionUID = -3811171614568221526L;
-
     /**
      * Enumerates the operations supported by this expression.
      */
