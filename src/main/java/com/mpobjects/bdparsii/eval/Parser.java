@@ -257,8 +257,9 @@ public class Parser {
             Expression right = term();
             return reOrder(left, right, BinaryOperation.Op.SUBTRACT);
         } else if (tokenizer.current().isNumber() && tokenizer.current().getContents().startsWith("-")) {
+            tokenizer.current().setContent(tokenizer.current().getContents().substring(1));            
             Expression right = term();
-            return reOrder(left, right, BinaryOperation.Op.ADD);
+            return reOrder(left, right, BinaryOperation.Op.SUBTRACT);
         } else {
             return left;
         }
