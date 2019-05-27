@@ -23,18 +23,9 @@ System.out.println(expr.evaluate());
 
 ## Performance
 
-This version is roughly 10.5 times slower than Parsii executing the following test (9ms vs 97ms).
+This version is roughly 8.5 times slower than the original (double based) Parsii.
 
-```java
-Scope scope = new Scope();
-Variable var = scope.create("x");
-Expression expr = Parser.parse("2 + (7 - 5) * 3.14159 * x^(12-10) + sin(-3.141)", scope);
-for (int x = 0; x < 1000000; ++x) {
-	var.setValue(x);
-	expr.evaluate();
-}
-```
-
+For more informatio see [the performance test suite](src/test/perftest/README.md).
 
 ## Maven
 
