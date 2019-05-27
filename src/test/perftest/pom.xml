@@ -49,6 +49,7 @@
 				</executions>
 				<configuration>
 					<mainClass>com.mpobjects.bdparsii.perftest.Main</mainClass>
+					<commandlineArgs>-f 5 -i 10 -wi 10 -rf json -rff ${project.build.directory}${file.separator}jmh-results.json</commandlineArgs>
 					<systemProperties>
 						<systemProperty>
 							<key>java.class.path</key>
