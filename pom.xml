@@ -66,9 +66,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
-		<!-- Used for the checkstyle configuration -->
-		<sirius.parent.version>3.12</sirius.parent.version>
 	</properties>
 
 	<build>
@@ -137,13 +134,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.16</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<id>validate</id>
 						<phase>validate</phase>
 						<configuration>
-							<configLocation>checkstyle-strict.xml</configLocation>
+							<configLocation>src/main/qa/checkstyle.xml</configLocation>
 							<encoding>UTF-8</encoding>
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>false</failsOnError>
@@ -153,13 +150,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>com.scireum</groupId>
-						<artifactId>sirius-parent</artifactId>
-						<version>${sirius.parent.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -226,7 +216,7 @@
 													maven-checkstyle-plugin
 												</artifactId>
 												<versionRange>
-													[2,)
+													[3.1.0,)
 												</versionRange>
 												<goals>
 													<goal>checkstyle</goal>
