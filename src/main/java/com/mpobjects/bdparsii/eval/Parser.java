@@ -43,7 +43,7 @@ import com.mpobjects.bdparsii.tokenizer.Tokenizer;
 public class Parser {
 
     private final Scope scope;
-    private List<ParseError> errors = new ArrayList<ParseError>();
+    private List<ParseError> errors = new ArrayList<>();
     private Tokenizer tokenizer;
     private static Map<String, Function> functionTable;
 
@@ -85,12 +85,7 @@ public class Parser {
     /**
      * Used when the parser encountered an error
      */
-    private static final Expression ERROR = new Expression() {
-        @Override
-        public BigDecimal evaluate() {
-            return null;
-        }
-    };
+    private static final Expression ERROR = () -> null;
 
     protected Parser(Reader input, Scope scope) {
         this.scope = scope;
@@ -408,7 +403,6 @@ public class Parser {
      *
      * @return an atom parsed from the given input
      */
-    @SuppressWarnings("squid:S1698")
     private Expression literalAtom() {
         if (tokenizer.current().isSymbol("+") && tokenizer.next().isNumber()) {
             // Parse numbers with a leading + sign like +2.02 by simply ignoring the +
@@ -418,22 +412,22 @@ public class Parser {
             BigDecimal value = new BigDecimal(tokenizer.consume().getContents());
             if (tokenizer.current().is(Token.TokenType.ID)) {
                 String quantifier = tokenizer.current().getContents().intern();
-                if ("n" == quantifier) {
+                if ("n".equals(quantifier)) {
                     value = value.divide(BigDecimal.valueOf(1000000000));
                     tokenizer.consume();
-                } else if ("u" == quantifier) {
+                } else if ("u".equals(quantifier)) {
                     value = value.divide(BigDecimal.valueOf(1000000));
                     tokenizer.consume();
-                } else if ("m" == quantifier) {
+                } else if ("m".equals(quantifier)) {
                     value = value.divide(BigDecimal.valueOf(1000));
                     tokenizer.consume();
-                } else if ("K" == quantifier || "k" == quantifier) {
+                } else if ("K".equals(quantifier) || "k".equals(quantifier)) {
                     value = value.multiply(BigDecimal.valueOf(1000));
                     tokenizer.consume();
-                } else if ("M" == quantifier) {
+                } else if ("M".equals(quantifier)) {
                     value = value.multiply(BigDecimal.valueOf(1000000));
                     tokenizer.consume();
-                } else if ("G" == quantifier) {
+                } else if ("G".equals(quantifier)) {
                     value = value.multiply(BigDecimal.valueOf(1000000000));
                     tokenizer.consume();
                 } else {

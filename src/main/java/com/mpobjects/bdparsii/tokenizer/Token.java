@@ -259,7 +259,6 @@ public class Token implements Position {
      * @param trigger the expected trigger
      * @return <tt>true</tt> if this token matches the given type and trigger, <tt>false</tt> otherwise
      */
-    @SuppressWarnings("squid:S1698")
     public boolean matches(TokenType type, String trigger) {
         if (!is(type)) {
             return false;
@@ -268,7 +267,7 @@ public class Token implements Position {
             throw new IllegalArgumentException("trigger must not be null");
         }
 
-        return getTrigger() == trigger.intern();
+        return trigger.equals(getTrigger());
     }
 
     /**
@@ -277,13 +276,12 @@ public class Token implements Position {
      * @param triggers a list of possible triggers to compare to
      * @return <tt>true</tt> if this token was triggered by one of the given triggers, <tt>false</tt> otherwise
      */
-    @SuppressWarnings("squid:S1698")
     public boolean wasTriggeredBy(String... triggers) {
         if (triggers.length == 0) {
             return false;
         }
         for (String aTrigger : triggers) {
-            if (aTrigger != null && aTrigger.intern() == getTrigger()) {
+            if (aTrigger != null && aTrigger.equals(getTrigger())) {
                 return true;
             }
         }
