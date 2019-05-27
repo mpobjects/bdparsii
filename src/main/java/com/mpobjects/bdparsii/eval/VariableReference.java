@@ -9,11 +9,12 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Represents a reference to a variable.
  */
-public class VariableReference implements Expression {
+public final class VariableReference implements Expression {
 
     private Variable var;
 
@@ -27,7 +28,7 @@ public class VariableReference implements Expression {
     }
 
     @Override
-    public BigDecimal evaluate() {
+    public BigDecimal evaluate(MathContext mathContext) {
         return var.getValue();
     }
 
@@ -42,10 +43,11 @@ public class VariableReference implements Expression {
     }
 
     @Override
-    public Expression simplify() {
+    public Expression simplify(MathContext mathContext) {
         if (isConstant()) {
-            return new Constant(evaluate());
+            return new Constant(evaluate(mathContext));
+        } else {
+            return this;
         }
-        return this;
     }
 }

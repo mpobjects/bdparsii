@@ -47,6 +47,9 @@ public class Variable {
         if (constant) {
             throw new IllegalStateException(String.format("%s is constant!", name));
         }
+        if (value == null) {
+            throw new IllegalArgumentException("Value cannot be null.");
+        }
         this.value = value;
     }
 

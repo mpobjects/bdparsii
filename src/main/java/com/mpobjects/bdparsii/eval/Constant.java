@@ -9,11 +9,12 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Represents a constant numeric expression.
  */
-public class Constant implements Expression {
+public final class Constant implements Expression {
 
     private BigDecimal value;
 
@@ -22,7 +23,7 @@ public class Constant implements Expression {
     }
 
     @Override
-    public BigDecimal evaluate() {
+    public BigDecimal evaluate(MathContext mathContext) {
         return value;
     }
 

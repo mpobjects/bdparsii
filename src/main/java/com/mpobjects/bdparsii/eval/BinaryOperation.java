@@ -19,7 +19,7 @@ import ch.obermuhlner.math.big.BigDecimalMath;
  * A binary operation has two sub-expressions. A set of supported operations is also defined. If both arguments are
  * constant, simplifying this expression will again lead to a constant expression.
  */
-public class BinaryOperation implements Expression {
+public final class BinaryOperation extends AbstractExpression {
 
     /**
      * Enumerates the operations supported by this expression.
@@ -47,11 +47,13 @@ public class BinaryOperation implements Expression {
     /**
      * Creates a new binary operator for the given operator and operands.
      *
+     * @param mathContext the math context
      * @param op the operator of the operation
      * @param left the left operand
      * @param right the right operand
      */
-    public BinaryOperation(Op op, Expression left, Expression right) {
+    public BinaryOperation(MathContext mathContext, Op op, Expression left, Expression right) {
+        setMathContext(mathContext);
         this.op = op;
         this.left = left;
         this.right = right;
@@ -114,9 +116,9 @@ public class BinaryOperation implements Expression {
 
     @Override
     @SuppressWarnings({ "squid:S3776", "squid:MethodCyclomaticComplexity" })
-    public BigDecimal evaluate() {
-        BigDecimal a = left.evaluate();
-        BigDecimal b = right.evaluate();
+    public BigDecimal evaluate(MathContext mathContext) {
+        BigDecimal a = left.evaluate(mathContext);
+        BigDecimal b = right.evaluate(mathContext);
 
         if (a == null) {
             throw new ArithmeticException("Left argument evaluated to null");
@@ -127,17 +129,17 @@ public class BinaryOperation implements Expression {
 
         switch (op) {
             case ADD:
-                return a.add(b);
+                return a.add(b, mathContext);
             case SUBTRACT:
-                return a.subtract(b);
+                return a.subtract(b, mathContext);
             case MULTIPLY:
-                return a.multiply(b);
+                return a.multiply(b, mathContext);
             case DIVIDE:
-                return a.divide(b);
+                return a.divide(b, mathContext);
             case POWER:
-                return BigDecimalMath.pow(a, b, MathContext.DECIMAL64);
+                return BigDecimalMath.pow(a, b, mathContext);
             case MODULO:
-                return a.remainder(b);
+                return a.remainder(b, mathContext);
             case LT:
                 return a.compareTo(b) < 0 ? BigDecimal.ONE : BigDecimal.ZERO;
             case LT_EQ:
@@ -162,9 +164,9 @@ public class BinaryOperation implements Expression {
     }
 
     @Override
-    public Expression simplify() {
-        left = left.simplify();
-        right = right.simplify();
+    public Expression simplify(MathContext mathContext) {
+        left = left.simplify(mathContext);
+        right = right.simplify(mathContext);
         // First of all we check of both sides are constant. If true, we can directly evaluate the result...
         if (left.isConstant() && right.isConstant()) {
             return new Constant(evaluate());
@@ -202,12 +204,14 @@ public class BinaryOperation implements Expression {
             // being on the left side, since we reorder commutative operations (see above)
             if (childOp.left.isConstant()) {
                 if (op == Op.ADD) {
-                    return new BinaryOperation(op,
+                    return new BinaryOperation(getMathContext(),
+                                               op,
                                                new Constant(left.evaluate().add(childOp.left.evaluate())),
                                                childOp.right);
                 }
                 if (op == Op.MULTIPLY) {
-                    return new BinaryOperation(op,
+                    return new BinaryOperation(getMathContext(),
+                                               op,
                                                new Constant(left.evaluate().multiply(childOp.left.evaluate())),
                                                childOp.right);
                 }
@@ -217,7 +221,10 @@ public class BinaryOperation implements Expression {
         if (childOp.left.isConstant()) {
             // Since our left side is non constant, but the left side of the child expression is,
             // we push the constant up, to support further optimizations
-            return new BinaryOperation(op, childOp.left, new BinaryOperation(op, left, childOp.right));
+            return new BinaryOperation(getMathContext(),
+                                       op,
+                                       childOp.left,
+                                       new BinaryOperation(getMathContext(), op, left, childOp.right));
         }
 
         return null;

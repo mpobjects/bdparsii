@@ -9,24 +9,34 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents the invocation of a function.
  */
-public class FunctionCall implements Expression {
+public final class FunctionCall extends AbstractExpression {
 
     private List<Expression> parameters = new ArrayList<>();
     private Function function;
 
-    @Override
-    public BigDecimal evaluate() {
-        return function.eval(parameters);
+    /**
+     * Create a function call expression.
+     *
+     * @param mathContext the math context
+     */
+    public FunctionCall(MathContext mathContext) {
+        setMathContext(mathContext);
     }
 
     @Override
-    public Expression simplify() {
+    public BigDecimal evaluate(MathContext mathContext) {
+        return function.eval(parameters, mathContext);
+    }
+
+    @Override
+    public Expression simplify(MathContext mathContext) {
         if (!function.isNaturalFunction()) {
             return this;
         }
@@ -35,7 +45,7 @@ public class FunctionCall implements Expression {
                 return this;
             }
         }
-        return new Constant(evaluate());
+        return new Constant(evaluate(mathContext));
     }
 
     /**

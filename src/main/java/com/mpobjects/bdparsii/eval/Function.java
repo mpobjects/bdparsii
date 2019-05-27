@@ -9,6 +9,7 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 /**
@@ -37,9 +38,10 @@ public interface Function {
      *
      * @param args the arguments for this function. The length of the given list will exactly match
      *            <tt>getNumberOfArguments</tt>
+     * @param mathContext the math context to use.
      * @return the result of the function evaluated with the given arguments
      */
-    BigDecimal eval(List<Expression> args);
+    BigDecimal eval(List<Expression> args, MathContext mathContext);
 
     /**
      * A natural function returns the same output for the same input.

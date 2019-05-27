@@ -9,6 +9,7 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Represents the result of a parsed expression.
@@ -22,14 +23,26 @@ public interface Expression {
      *
      * @return the double value as a result of evaluating this expression.
      */
-    BigDecimal evaluate();
+    default BigDecimal evaluate() {
+        return evaluate(getMathContext());
+    }
+
+    /**
+     * Evaluates the expression to a BigDecimal number.
+     *
+     * @param mathContext Use this math context during calculation instead of the one provided during parsing. Does not
+     *            affect already simplified subexpressions.
+     * @return the double value as a result of evaluating this expression.
+     */
+    BigDecimal evaluate(MathContext mathContext);
 
     /**
      * Returns a simplified version of this expression.
      *
+     * @param mathContext Match context used during simplification.
      * @return a simplified version of this expression or <tt>this</tt> if the expression cannot be simplified
      */
-    default Expression simplify() {
+    default Expression simplify(MathContext mathContext) {
         return this;
     }
 
@@ -41,5 +54,14 @@ public interface Expression {
      */
     default boolean isConstant() {
         return false;
+    }
+
+    /**
+     * Can return the default math context to use during evaluation.
+     *
+     * @return math context
+     */
+    default MathContext getMathContext() {
+        return null;
     }
 }

@@ -11,6 +11,7 @@ package com.mpobjects.bdparsii.eval;
 import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class Parser {
     /**
      * Used when the parser encountered an error
      */
-    private static final Expression ERROR = () -> null;
+    private static final Expression ERROR = mc -> null;
 
     protected Parser(Reader input, Scope scope) {
         this.scope = scope;
@@ -165,7 +166,7 @@ public class Parser {
      * @throws ParseException if the expression contains one or more errors
      */
     protected Expression parse() throws ParseException {
-        Expression result = expression().simplify();
+        Expression result = expression().simplify(scope.getMathContext());
         if (tokenizer.current().isNotEnd()) {
             Token token = tokenizer.consume();
             errors.add(ParseError
@@ -303,7 +304,7 @@ public class Parser {
                 return right;
             }
         }
-        return new BinaryOperation(op, left, right);
+        return new BinaryOperation(scope.getMathContext(), op, left, right);
     }
 
     protected void replaceLeft(BinaryOperation target, Expression newLeft, BinaryOperation.Op op) {
@@ -314,7 +315,7 @@ public class Parser {
                 return;
             }
         }
-        target.setLeft(new BinaryOperation(op, newLeft, target.getLeft()));
+        target.setLeft(new BinaryOperation(scope.getMathContext(), op, newLeft, target.getLeft()));
     }
 
     /**
@@ -347,7 +348,8 @@ public class Parser {
     protected Expression atom() {
         if (tokenizer.current().isSymbol("-")) {
             tokenizer.consume();
-            BinaryOperation result = new BinaryOperation(BinaryOperation.Op.SUBTRACT,
+            BinaryOperation result = new BinaryOperation(scope.getMathContext(),
+                                                         BinaryOperation.Op.SUBTRACT,
                                                          new Constant(BigDecimal.ZERO),
                                                          atom());
             result.seal();
@@ -369,7 +371,7 @@ public class Parser {
             return result;
         } else if (tokenizer.current().isSymbol("|")) {
             tokenizer.consume();
-            FunctionCall call = new FunctionCall();
+            FunctionCall call = new FunctionCall(scope.getMathContext());
             call.addParameter(expression());
             call.setFunction(Functions.ABS);
             expect(Token.TokenType.SYMBOL, "|");
@@ -408,22 +410,22 @@ public class Parser {
             if (tokenizer.current().is(Token.TokenType.ID)) {
                 String quantifier = tokenizer.current().getContents().intern();
                 if ("n".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000000000));
+                    value = value.divide(BigDecimal.valueOf(1000000000), scope.getMathContext());
                     tokenizer.consume();
                 } else if ("u".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000000));
+                    value = value.divide(BigDecimal.valueOf(1000000), scope.getMathContext());
                     tokenizer.consume();
                 } else if ("m".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000));
+                    value = value.divide(BigDecimal.valueOf(1000), scope.getMathContext());
                     tokenizer.consume();
                 } else if ("K".equals(quantifier) || "k".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000));
+                    value = value.multiply(BigDecimal.valueOf(1000), scope.getMathContext());
                     tokenizer.consume();
                 } else if ("M".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000000));
+                    value = value.multiply(BigDecimal.valueOf(1000000), scope.getMathContext());
                     tokenizer.consume();
                 } else if ("G".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000000000));
+                    value = value.multiply(BigDecimal.valueOf(1000000000), scope.getMathContext());
                     tokenizer.consume();
                 } else {
                     Token token = tokenizer.consume();
@@ -447,7 +449,7 @@ public class Parser {
      * @return the function call as Expression
      */
     protected Expression functionCall() {
-        FunctionCall call = new FunctionCall();
+        FunctionCall call = new FunctionCall(scope.getMathContext());
         Token funToken = tokenizer.consume();
         Function fun = functionTable.get(funToken.getContents());
         if (fun == null) {

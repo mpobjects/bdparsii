@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 import org.junit.Test;
@@ -155,13 +156,13 @@ public class ParserTest {
             }
 
             @Override
-            public BigDecimal eval(List<Expression> args) {
+            public BigDecimal eval(List<Expression> args, MathContext mathContext) {
                 BigDecimal avg = BigDecimal.ZERO;
                 if (args.isEmpty()) {
                     return avg;
                 }
                 for (Expression e : args) {
-                    avg = avg.add(e.evaluate());
+                    avg = avg.add(e.evaluate(mathContext));
                 }
                 return avg.divide(BigDecimal.valueOf(args.size()));
             }

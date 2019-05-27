@@ -9,6 +9,7 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 /**
@@ -24,21 +25,22 @@ public abstract class UnaryFunction implements Function {
     }
 
     @Override
-    public BigDecimal eval(List<Expression> args) {
-        BigDecimal a = args.get(0).evaluate();
+    public BigDecimal eval(List<Expression> args, MathContext mathContext) {
+        BigDecimal a = args.get(0).evaluate(mathContext);
         if (a == null) {
             throw new ArithmeticException("Parameter evaluated to null");
         }
-        return eval(a);
+        return eval(a, mathContext);
     }
 
     /**
      * Performs the computation of the unary function
      *
      * @param a the argument of the function
+     * @param mathContext the math context
      * @return the result of calling the function with a as argument
      */
-    protected abstract BigDecimal eval(BigDecimal a);
+    protected abstract BigDecimal eval(BigDecimal a, MathContext mathContext);
 
     @Override
     public boolean isNaturalFunction() {

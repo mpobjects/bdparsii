@@ -9,6 +9,7 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Scope {
     private Scope parent;
     private boolean autocreateVariables = true;
     private Map<String, Variable> context = new ConcurrentHashMap<>();
+    private MathContext mathContext = MathContext.DECIMAL64;
 
     private static Scope root;
 
@@ -71,7 +73,7 @@ public class Scope {
      * <p>
      * A scope with strict lookup will not create unknown variables upon their first access but rather throw an error.
      * <p>
-     * By default, scopes are not strict and will automatically create variables when first reuqested.
+     * By default, scopes are not strict and will automatically create variables when first requested.
      *
      * @param strictLookup <tt>true</tt> if the scope should be switched to strict lookup, <tt>false</tt> otherwise
      * @return the instance itself for fluent method calls
@@ -89,7 +91,7 @@ public class Scope {
      * certain set of variables.
      *
      * @param parent the parent scope to use. If <tt>null</tt>, the common root scope is used which defines a bunch of
-     * constants (e and pi).
+     *            constants (e and pi).
      * @return the instance itself for fluent method calls
      */
     public Scope withParent(Scope parent) {
@@ -128,7 +130,7 @@ public class Scope {
      * @param name the variable to look for
      * @return a variable with the given name
      * @throws IllegalArgumentException if {@link #autocreateVariables} is <tt>false</tt> and the given variable was not
-     * creted yet.
+     *             creted yet.
      */
     public Variable getVariable(String name) {
         Variable result = find(name);
@@ -224,4 +226,32 @@ public class Scope {
         result.addAll(getLocalVariables());
         return result;
     }
+
+    public MathContext getMathContext() {
+        return mathContext;
+    }
+
+    /**
+     * Set the math context to use.
+     *
+     * @param mathContext the math context
+     */
+    public void setMathContext(MathContext mathContext) {
+        if (mathContext == null) {
+            throw new IllegalArgumentException("MathContext cannot be null");
+        }
+        this.mathContext = mathContext;
+    }
+
+    /**
+     * Set the math context to use.
+     *
+     * @param mathContext the math context
+     * @return this
+     */
+    public Scope withMathContext(MathContext mathContext) {
+        setMathContext(mathContext);
+        return this;
+    }
+
 }
