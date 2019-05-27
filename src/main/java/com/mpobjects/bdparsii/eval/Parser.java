@@ -31,7 +31,7 @@ import com.mpobjects.bdparsii.tokenizer.Tokenizer;
  * This is a recursive descending parser which has a method per non-terminal.
  * <p>
  * Using this parser is as easy as:
- * 
+ *
  * <pre>
  * Scope scope = Scope.create();
  * Variable a = scope.getVariable("a");
@@ -257,7 +257,7 @@ public class Parser {
             Expression right = term();
             return reOrder(left, right, BinaryOperation.Op.SUBTRACT);
         } else if (tokenizer.current().isNumber() && tokenizer.current().getContents().startsWith("-")) {
-            tokenizer.current().setContent(tokenizer.current().getContents().substring(1));            
+            tokenizer.current().setContent(tokenizer.current().getContents().substring(1));
             Expression right = term();
             return reOrder(left, right, BinaryOperation.Op.SUBTRACT);
         } else {
@@ -358,6 +358,7 @@ public class Parser {
             // + sign
             tokenizer.consume();
         }
+
         if (tokenizer.current().isSymbol("(")) {
             tokenizer.consume();
             Expression result = expression();
@@ -461,7 +462,7 @@ public class Parser {
             call.addParameter(expression());
         }
         expect(Token.TokenType.SYMBOL, ")");
-        
+
         if (fun == null) {
             return ERROR;
         } else if (call.getParameters().size() != fun.getNumberOfArguments() && fun.getNumberOfArguments() >= 0) {
