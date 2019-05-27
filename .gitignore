@@ -14,3 +14,6 @@ buildNumber.properties
 /.checkstyle
 /.classpath
 /.project
+/src/test/perftest/.settings/
+/src/test/perftest/.classpath
+/src/test/perftest/.project
