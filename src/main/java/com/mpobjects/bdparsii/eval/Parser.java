@@ -30,7 +30,9 @@ import com.mpobjects.bdparsii.tokenizer.Tokenizer;
  * <p>
  * This is a recursive descending parser which has a method per non-terminal.
  * <p>
- * Using this parser is as easy as: {@code
+ * Using this parser is as easy as:
+ * 
+ * <pre>
  * Scope scope = Scope.create();
  * Variable a = scope.getVariable("a");
  * Expression expr = Parser.parse("3 + a * 4");
@@ -38,7 +40,7 @@ import com.mpobjects.bdparsii.tokenizer.Tokenizer;
  * System.out.println(expr.evaluate());
  * a.setValue(5);
  * System.out.println(expr.evaluate());
- * }
+ * </pre>
  */
 public class Parser {
 
@@ -189,13 +191,13 @@ public class Parser {
             tokenizer.consume();
             Expression right = expression();
             return reOrder(left, right, BinaryOperation.Op.AND);
-        }
-        if (tokenizer.current().isSymbol("||")) {
+        } else if (tokenizer.current().isSymbol("||")) {
             tokenizer.consume();
             Expression right = expression();
             return reOrder(left, right, BinaryOperation.Op.OR);
+        } else {
+            return left;
         }
-        return left;
     }
 
     /**
@@ -212,33 +214,29 @@ public class Parser {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.LT);
-        }
-        if (tokenizer.current().isSymbol("<=")) {
+        } else if (tokenizer.current().isSymbol("<=")) {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.LT_EQ);
-        }
-        if (tokenizer.current().isSymbol("=")) {
+        } else if (tokenizer.current().isSymbol("=")) {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.EQ);
-        }
-        if (tokenizer.current().isSymbol(">=")) {
+        } else if (tokenizer.current().isSymbol(">=")) {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.GT_EQ);
-        }
-        if (tokenizer.current().isSymbol(">")) {
+        } else if (tokenizer.current().isSymbol(">")) {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.GT);
-        }
-        if (tokenizer.current().isSymbol("!=")) {
+        } else if (tokenizer.current().isSymbol("!=")) {
             tokenizer.consume();
             Expression right = relationalExpression();
             return reOrder(left, right, BinaryOperation.Op.NEQ);
+        } else {
+            return left;
         }
-        return left;
     }
 
     /**
@@ -254,20 +252,16 @@ public class Parser {
             tokenizer.consume();
             Expression right = term();
             return reOrder(left, right, BinaryOperation.Op.ADD);
-        }
-        if (tokenizer.current().isSymbol("-")) {
+        } else if (tokenizer.current().isSymbol("-")) {
             tokenizer.consume();
             Expression right = term();
             return reOrder(left, right, BinaryOperation.Op.SUBTRACT);
+        } else if (tokenizer.current().isNumber() && tokenizer.current().getContents().startsWith("-")) {
+            Expression right = term();
+            return reOrder(left, right, BinaryOperation.Op.ADD);
+        } else {
+            return left;
         }
-        if (tokenizer.current().isNumber()) {
-            if (tokenizer.current().getContents().startsWith("-")) {
-                Expression right = term();
-                return reOrder(left, right, BinaryOperation.Op.ADD);
-            }
-        }
-
-        return left;
     }
 
     /**
@@ -283,18 +277,17 @@ public class Parser {
             tokenizer.consume();
             Expression right = product();
             return reOrder(left, right, BinaryOperation.Op.MULTIPLY);
-        }
-        if (tokenizer.current().isSymbol("/")) {
+        } else if (tokenizer.current().isSymbol("/")) {
             tokenizer.consume();
             Expression right = product();
             return reOrder(left, right, BinaryOperation.Op.DIVIDE);
-        }
-        if (tokenizer.current().isSymbol("%")) {
+        } else if (tokenizer.current().isSymbol("%")) {
             tokenizer.consume();
             Expression right = product();
             return reOrder(left, right, BinaryOperation.Op.MODULO);
+        } else {
+            return left;
         }
-        return left;
     }
 
     /*
@@ -336,8 +329,9 @@ public class Parser {
             tokenizer.consume();
             Expression right = power();
             return reOrder(left, right, BinaryOperation.Op.POWER);
+        } else {
+            return left;
         }
-        return left;
     }
 
     /**
@@ -371,16 +365,14 @@ public class Parser {
             }
             expect(Token.TokenType.SYMBOL, ")");
             return result;
-        }
-        if (tokenizer.current().isSymbol("|")) {
+        } else if (tokenizer.current().isSymbol("|")) {
             tokenizer.consume();
             FunctionCall call = new FunctionCall();
             call.addParameter(expression());
             call.setFunction(Functions.ABS);
             expect(Token.TokenType.SYMBOL, "|");
             return call;
-        }
-        if (tokenizer.current().isIdentifier()) {
+        } else if (tokenizer.current().isIdentifier()) {
             if (tokenizer.next().isSymbol("(")) {
                 return functionCall();
             }
@@ -392,8 +384,9 @@ public class Parser {
                                             String.format("Unknown variable: '%s'", variableName.getContents())));
                 return new Constant(BigDecimal.ZERO);
             }
+        } else {
+            return literalAtom();
         }
-        return literalAtom();
     }
 
     /**
@@ -438,11 +431,12 @@ public class Parser {
                 }
             }
             return new Constant(value);
+        } else {
+            Token token = tokenizer.consume();
+            errors.add(ParseError
+                    .error(token, String.format("Unexpected token: '%s'. Expected an expression.", token.getSource())));
+            return ERROR;
         }
-        Token token = tokenizer.consume();
-        errors.add(ParseError
-                .error(token, String.format("Unexpected token: '%s'. Expected an expression.", token.getSource())));
-        return ERROR;
     }
 
     /**
@@ -466,10 +460,10 @@ public class Parser {
             call.addParameter(expression());
         }
         expect(Token.TokenType.SYMBOL, ")");
+        
         if (fun == null) {
             return ERROR;
-        }
-        if (call.getParameters().size() != fun.getNumberOfArguments() && fun.getNumberOfArguments() >= 0) {
+        } else if (call.getParameters().size() != fun.getNumberOfArguments() && fun.getNumberOfArguments() >= 0) {
             errors.add(ParseError
                     .error(funToken,
                            String.format("Number of arguments for function '%s' do not match. Expected: %d, Found: %d",
@@ -477,8 +471,9 @@ public class Parser {
                                          fun.getNumberOfArguments(),
                                          call.getParameters().size())));
             return ERROR;
+        } else {
+            return call;
         }
-        return call;
     }
 
     /**
