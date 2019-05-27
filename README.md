@@ -23,7 +23,7 @@ System.out.println(expr.evaluate());
 
 ## Performance
 
-This version is roughly 8.5 times slower than the original (double based) Parsii.
+The BigDecimal version is up to 8.5 times slower than the original (double based) Parsii, assuming the parsed expression is reused.
 
 For more informatio see [the performance test suite](src/test/perftest/README.md).
 
