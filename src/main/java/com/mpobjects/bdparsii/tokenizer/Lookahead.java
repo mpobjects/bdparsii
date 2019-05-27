@@ -23,7 +23,7 @@ public abstract class Lookahead<T> {
     /**
      * Internal buffer containing items which where already created due to lookaheads.
      */
-    protected List<T> itemBuffer = new ArrayList<T>();
+    protected List<T> itemBuffer = new ArrayList<>();
 
     /**
      * Determines if the end of the underlying data source has been reached.
@@ -34,7 +34,7 @@ public abstract class Lookahead<T> {
      * Used to collect problems which occurred when processing the input. This is used instead of classic exceptions, so
      * that errors can be recovered and we can continue to process to input to check for further errors or problems.
      */
-    protected List<ParseError> problemCollector = new ArrayList<ParseError>();
+    protected List<ParseError> problemCollector = new ArrayList<>();
 
     /**
      * Once the end of the underlying input was reached, an end of input indicator is created and constantly returned

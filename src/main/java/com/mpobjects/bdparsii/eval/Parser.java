@@ -51,7 +51,7 @@ public class Parser {
      * Setup well known functions
      */
     static {
-        functionTable = new TreeMap<String, Function>();
+        functionTable = new TreeMap<>();
 
         registerFunction("sin", Functions.SIN);
         registerFunction("cos", Functions.COS);
