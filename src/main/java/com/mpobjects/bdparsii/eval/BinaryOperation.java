@@ -19,7 +19,7 @@ import ch.obermuhlner.math.big.BigDecimalMath;
  * A binary operation has two sub-expressions. A set of supported operations is also defined. If both arguments are
  * constant, simplifying this expression will again lead to a constant expression.
  */
-public class BinaryOperation extends Expression {
+public class BinaryOperation implements Expression {
 
     /**
      * Enumerates the operations supported by this expression.
@@ -187,7 +187,7 @@ public class BinaryOperation extends Expression {
             }
         }
 
-        return super.simplify();
+        return this;
     }
 
     private Expression trySimplifyRightSide() {

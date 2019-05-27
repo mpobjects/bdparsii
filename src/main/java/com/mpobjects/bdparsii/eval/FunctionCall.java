@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Represents the invocation of a function.
  */
-public class FunctionCall extends Expression {
+public class FunctionCall implements Expression {
 
     private List<Expression> parameters = new ArrayList<>();
     private Function function;

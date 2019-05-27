@@ -15,21 +15,21 @@ import java.math.BigDecimal;
  * <p>
  * Can be evaluated to return a BigDecimal value.
  */
-public abstract class Expression {
+public interface Expression {
 
     /**
      * Evaluates the expression to a BigDecimal number.
      *
      * @return the double value as a result of evaluating this expression.
      */
-    public abstract BigDecimal evaluate();
+    BigDecimal evaluate();
 
     /**
      * Returns a simplified version of this expression.
      *
      * @return a simplified version of this expression or <tt>this</tt> if the expression cannot be simplified
      */
-    public Expression simplify() {
+    default Expression simplify() {
         return this;
     }
 
@@ -39,7 +39,7 @@ public abstract class Expression {
      * @return <tt>true</tt> if the result of evaluate will never change and does not depend on external state like
      *         variables
      */
-    public boolean isConstant() {
+    default boolean isConstant() {
         return false;
     }
 }

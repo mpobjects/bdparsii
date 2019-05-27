@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 /**
  * Represents a constant numeric expression.
  */
-public class Constant extends Expression {
+public class Constant implements Expression {
 
     private BigDecimal value;
 
