@@ -23,7 +23,7 @@ public class FullBenchmark {
 		Scope scope = new Scope();
 		Variable var = scope.create("x");
 		Expression expr = Parser.parse(FORMULA, scope);
-		for (int x = 0; x < aPlan.iterations; ++x) {
+		for (int x = 1_000_000-aPlan.iterations; x < 1_000_000; ++x) {
 			var.setValue(x);
 			expr.evaluate();
 		}
@@ -34,7 +34,7 @@ public class FullBenchmark {
 		parsii.eval.Scope scope = new parsii.eval.Scope();
 		parsii.eval.Variable var = scope.create("x");
 		parsii.eval.Expression expr = parsii.eval.Parser.parse(FORMULA, scope);
-		for (int x = 0; x < aPlan.iterations; ++x) {
+		for (int x = 1_000_000-aPlan.iterations; x < 1_000_000; ++x) {
 			var.setValue(x);
 			expr.evaluate();
 		}
