@@ -16,7 +16,7 @@ public class ExponentTest {
     @Test
     public void testIssue19() throws ParseException {
         Assert.assertEquals(-33, Parser.parse("3-(6^2)").evaluate().intValueExact());
-        //Assert.assertEquals(-33, Parser.parse("3-6^2").evaluate().intValueExact());
+        Assert.assertEquals(-33, Parser.parse("3-6^2").evaluate().intValueExact());
 
         Scope scope = new Scope();
         scope.create("a").setValue(3);
