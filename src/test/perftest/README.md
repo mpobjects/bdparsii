@@ -14,7 +14,7 @@ for (int x = 0; x < iterations; ++x) {
 }
 ```
 
-This will test both parsing/compilation of the expression as execution of the given expression. 
+This will test both parsing/compilation of the expression as execution of the given expression. This test is based on the [original performance test](http://andreas.haufler.info/2013/12/how-to-write-one-of-fastest-expression.html) of the parsii library.
 
 ## Results
 
@@ -39,3 +39,5 @@ FullBenchmark.parsii           10000  thrpt   50    9317.160 ±  77.967  ops/s
 FullBenchmark.parsii          100000  thrpt   50    1040.265 ±  13.200  ops/s
 FullBenchmark.parsii         1000000  thrpt   50     107.291 ±   0.920  ops/s
 ``` 
+
+As these results show performing BigDecimal calculcations are slower than double based calculations. But most of the time is actually spend in parsing of the expression rather than execution.
