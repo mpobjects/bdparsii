@@ -8,7 +8,6 @@
 
 package com.mpobjects.bdparsii.eval;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * Contains a mapping of names to variables.
@@ -33,39 +34,22 @@ public class Scope {
     private Map<String, Variable> context = new ConcurrentHashMap<>();
     private MathContext mathContext = MathContext.DECIMAL64;
 
-    private static Scope root;
-
     /**
      * Creates a new empty scope.
      * <p>
-     * The scope will not be completely empty, as {@link Math#PI} (pi) and {@link Math#E} (E) are always defined as
-     * constants.
+     * The scope will not be completely empty, as pi and euler are always defined as constants.
      * <p>
      * If an not yet known variable is accessed, it will be created and initialized with 0.
      */
     public Scope() {
-        this(false);
+        createConstants();
     }
 
-    private Scope(boolean skipParent) {
-        if (!skipParent) {
-            this.parent = getRootScope();
-        }
-    }
-
-    /*
-     * Creates the internal root scope which contains eternal constants ;-)
-     */
-    private static Scope getRootScope() {
-        if (root == null) {
-            synchronized (Scope.class) {
-                root = new Scope(true);
-                root.create("pi").makeConstant(BigDecimal.valueOf(Math.PI));
-                root.create("euler").makeConstant(BigDecimal.valueOf(Math.E));
-            }
-        }
-
-        return root;
+    protected void createConstants() {
+        remove("pi");
+        create("pi").makeConstant(BigDecimalMath.pi(MathContextGuard.getSafeContext(mathContext)));
+        remove("euler");
+        create("euler").makeConstant(BigDecimalMath.e(MathContextGuard.getSafeContext(mathContext)));
     }
 
     /**
@@ -90,16 +74,11 @@ public class Scope {
      * If a scope cannot resolve a variable, it tries to resolve it using its parent scope. This permits to share a
      * certain set of variables.
      *
-     * @param parent the parent scope to use. If <tt>null</tt>, the common root scope is used which defines a bunch of
-     *            constants (e and pi).
+     * @param parent the parent scope to use.
      * @return the instance itself for fluent method calls
      */
     public Scope withParent(Scope parent) {
-        if (parent == null) {
-            this.parent = getRootScope();
-        } else {
-            this.parent = parent;
-        }
+        this.parent = parent;
 
         return this;
     }
@@ -240,14 +219,18 @@ public class Scope {
         if (mathContext == null) {
             throw new IllegalArgumentException("MathContext cannot be null");
         }
+        boolean changed = !this.mathContext.equals(mathContext);
         this.mathContext = mathContext;
+        if (changed) {
+            createConstants();
+        }
     }
 
     /**
      * Set the math context to use.
      *
      * @param mathContext the math context
-     * @return this
+     * @return the instance itself for fluent method calls
      */
     public Scope withMathContext(MathContext mathContext) {
         setMathContext(mathContext);

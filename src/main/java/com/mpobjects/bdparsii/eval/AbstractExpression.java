@@ -15,14 +15,14 @@ import java.math.MathContext;
  */
 public abstract class AbstractExpression implements Expression {
 
-    private MathContext mathContext;
+    private final MathContext mathContext;
 
     /**
-     * Set the math context.
+     * Create a new abstract expression
      *
      * @param mathContext the math context. Cannot be null.
      */
-    public final void setMathContext(MathContext mathContext) {
+    protected AbstractExpression(MathContext mathContext) {
         if (mathContext == null) {
             throw new IllegalArgumentException("MathContext cannot be null");
         }

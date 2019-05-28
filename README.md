@@ -23,9 +23,10 @@ System.out.println(expr.evaluate());
 
 ## Performance
 
-The BigDecimal version can be up to 10 times slower than the original (double based) Parsii, assuming the parsed expression is reused. This is the result of arbitrary precision calculcations.
+Due to calculation on arbitrary-precision decimals the performance of calculations is significantly worse than the calculations performed by the double based parsii.
+Performance depends a lot on the used precision and used mathematical functions.
 
-For more informatio see [the performance test suite](src/test/perftest/README.md).
+For more information see [the performance test suite](src/test/perftest/README.md).
 
 ## Maven
 

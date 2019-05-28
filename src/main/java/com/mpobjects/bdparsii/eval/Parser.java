@@ -58,14 +58,21 @@ public class Parser {
 
         registerFunction("sin", Functions.SIN);
         registerFunction("cos", Functions.COS);
+        registerFunction("cot", Functions.COT);
         registerFunction("tan", Functions.TAN);
         registerFunction("sinh", Functions.SINH);
         registerFunction("cosh", Functions.COSH);
+        registerFunction("coth", Functions.COTH);
         registerFunction("tanh", Functions.TANH);
         registerFunction("asin", Functions.ASIN);
         registerFunction("acos", Functions.ACOS);
+        registerFunction("acot", Functions.ACOT);
         registerFunction("atan", Functions.ATAN);
         registerFunction("atan2", Functions.ATAN2);
+        registerFunction("asinh", Functions.ASINH);
+        registerFunction("acosh", Functions.ACOSH);
+        registerFunction("acoth", Functions.ACOTH);
+        registerFunction("atanh", Functions.ATANH);
         registerFunction("deg", Functions.DEG);
         registerFunction("rad", Functions.RAD);
         registerFunction("abs", Functions.ABS);
@@ -75,12 +82,15 @@ public class Parser {
         registerFunction("exp", Functions.EXP);
         registerFunction("ln", Functions.LN);
         registerFunction("log", Functions.LOG);
+        registerFunction("log2", Functions.LOG2);
         registerFunction("sqrt", Functions.SQRT);
         registerFunction("pow", Functions.POW);
         registerFunction("min", Functions.MIN);
         registerFunction("max", Functions.MAX);
         registerFunction("rnd", Functions.RND);
         registerFunction("sign", Functions.SIGN);
+        registerFunction("exponent", Functions.EXPONENT);
+        registerFunction("mantissa", Functions.MANTISSA);
         registerFunction("if", Functions.IF);
         registerFunction("scale", Functions.SCALE);
     }

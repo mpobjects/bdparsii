@@ -53,7 +53,7 @@ public final class BinaryOperation extends AbstractExpression {
      * @param right the right operand
      */
     public BinaryOperation(MathContext mathContext, Op op, Expression left, Expression right) {
-        setMathContext(mathContext);
+        super(mathContext);
         this.op = op;
         this.left = left;
         this.right = right;
@@ -137,7 +137,7 @@ public final class BinaryOperation extends AbstractExpression {
             case DIVIDE:
                 return a.divide(b, mathContext);
             case POWER:
-                return BigDecimalMath.pow(a, b, mathContext);
+                return BigDecimalMath.pow(a, b, MathContextGuard.getSafeContext(mathContext));
             case MODULO:
                 return a.remainder(b, mathContext);
             case LT:

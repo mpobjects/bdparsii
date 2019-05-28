@@ -27,7 +27,7 @@ public final class FunctionCall extends AbstractExpression {
      * @param mathContext the math context
      */
     public FunctionCall(MathContext mathContext) {
-        setMathContext(mathContext);
+        super(mathContext);
     }
 
     @Override

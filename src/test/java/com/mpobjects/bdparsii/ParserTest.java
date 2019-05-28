@@ -142,7 +142,7 @@ public class ParserTest {
     public void functions() throws ParseException {
         assertEquals(BigDecimal.valueOf(0).setScale(10),
                      Parser.parse("1 + scale(sin(-pi), 10) + scale(cos(pi), 10)").evaluate());
-        assertEquals(new BigDecimal("4.720383415756170"), Parser.parse("tan(sqrt(euler ^ (pi * 3)))").evaluate());
+        assertEquals(new BigDecimal("4.720383415753841"), Parser.parse("tan(sqrt(euler ^ (pi * 3)))").evaluate());
         assertEquals(BigDecimal.valueOf(3), Parser.parse("| 3 - 6 |").evaluate());
         assertEquals(BigDecimal.valueOf(3), Parser.parse("if(3 > 2 && 2 < 3, 2+1, 1+1)").evaluate());
         assertEquals(BigDecimal.valueOf(2), Parser.parse("if(3 < 2 || 2 > 3, 2+1, 1+1)").evaluate());
