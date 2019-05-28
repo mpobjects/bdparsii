@@ -45,7 +45,7 @@ public final class BinaryOperation extends AbstractExpression {
     /**
      * power function which uses the JRE's {@link BigDecimal#pow(int, MathContext)} when <code>y</code> is an integer
      * within range. Otherwise use {@link BigDecimalMath#pow(BigDecimal, BigDecimal, MathContext)}.
-     * 
+     *
      * @param x the {@link BigDecimal} value to take to the power
      * @param y the {@link BigDecimal} value to serve as exponent
      * @param mathContext the {@link MathContext} used for the result

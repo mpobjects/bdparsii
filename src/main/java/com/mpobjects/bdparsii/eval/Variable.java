@@ -87,7 +87,7 @@ public class Variable {
 
     /**
      * Makes a constant who's value is supplied when this constant is first referenced.
-     * 
+     *
      * @param supplier supplier of the constant value
      */
     public void makeConstant(Supplier<BigDecimal> supplier) {
