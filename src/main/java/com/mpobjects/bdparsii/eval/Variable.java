@@ -9,6 +9,7 @@
 package com.mpobjects.bdparsii.eval;
 
 import java.math.BigDecimal;
+import java.util.function.Supplier;
 
 /**
  * Represents a variable which binds a value to a name.
@@ -21,9 +22,10 @@ import java.math.BigDecimal;
  */
 public class Variable {
 
-    private BigDecimal value = BigDecimal.ZERO;
+    private BigDecimal value;
     private String name;
-    private boolean constant = false;
+    private boolean constant;
+    private Supplier<BigDecimal> initializor = () -> BigDecimal.ZERO;
 
     /**
      * Creates a new variable.
@@ -84,17 +86,34 @@ public class Variable {
     }
 
     /**
+     * Makes a constant who's value is supplied when this constant is first referenced.
+     * 
+     * @param supplier supplier of the constant value
+     */
+    public void makeConstant(Supplier<BigDecimal> supplier) {
+        if (constant) {
+            throw new IllegalStateException(String.format("%s is constant!", name));
+        }
+        value = null;
+        initializor = supplier;
+        this.constant = true;
+    }
+
+    /**
      * Returns the value previously set.
      *
      * @return the value previously set or 0 if the variable is not written yet
      */
     public BigDecimal getValue() {
+        if (value == null) {
+            value = initializor.get();
+        }
         return value;
     }
 
     @Override
     public String toString() {
-        return name + ": " + value;
+        return name + ": " + getValue();
     }
 
     /**

@@ -45,13 +45,6 @@ public class Scope {
         createConstants();
     }
 
-    protected void createConstants() {
-        remove("pi");
-        create("pi").makeConstant(BigDecimalMath.pi(MathContextGuard.getSafeContext(mathContext)));
-        remove("euler");
-        create("euler").makeConstant(BigDecimalMath.e(MathContextGuard.getSafeContext(mathContext)));
-    }
-
     /**
      * Determines if strict lookup should be used or not.
      * <p>
@@ -219,11 +212,7 @@ public class Scope {
         if (mathContext == null) {
             throw new IllegalArgumentException("MathContext cannot be null");
         }
-        boolean changed = !this.mathContext.equals(mathContext);
         this.mathContext = mathContext;
-        if (changed) {
-            createConstants();
-        }
     }
 
     /**
@@ -237,4 +226,8 @@ public class Scope {
         return this;
     }
 
+    protected void createConstants() {
+        create("pi").makeConstant(() -> BigDecimalMath.pi(MathContextGuard.getSafeContext(mathContext)));
+        create("euler").makeConstant(() -> BigDecimalMath.e(MathContextGuard.getSafeContext(mathContext)));
+    }
 }
