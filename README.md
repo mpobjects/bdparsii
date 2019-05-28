@@ -21,6 +21,14 @@ a.setValue(5);
 System.out.println(expr.evaluate());
 ```
 
+## MathContext
+
+An important part of calculations with BigDecimals is the [MathContext](https://docs.oracle.com/javase/8/docs/api/java/math/MathContext.html). By default `DECIMAL64` is used, which is similar to the `double` precision.
+
+The MathContext can be set on the `Scope` instance. It can also be passed on in the `evaluate` method of expression. But this will not affect parts of the expression which were simplified to constants.
+
+Complex mathematical functions are executed by the [Big Math library](https://github.com/eobermuhlner/big-math). Most of these functions do not support unlimited precision (as there simply is no end). In this case a fallback MathContext is used, which is by default `DECIMAL128`.
+
 ## Performance
 
 Due to calculation on arbitrary-precision decimals the performance of calculations is significantly worse than the calculations performed by the double based parsii.
@@ -30,7 +38,7 @@ For more information see [the performance test suite](src/test/perftest/README.m
 
 ## Maven
 
-bdparsii is available under:
+bdparsii is available from the central repository:
 
 ```xml
 <dependency>
