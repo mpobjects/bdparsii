@@ -244,7 +244,7 @@ public class Functions {
     public static final Function POW = new BinaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a, BigDecimal b, MathContext mathContext) {
-            return BigDecimalMath.pow(a, b, MathContextGuard.getSafeContext(mathContext));
+            return BinaryOperation.pow(a, b, mathContext);
         }
     };
 

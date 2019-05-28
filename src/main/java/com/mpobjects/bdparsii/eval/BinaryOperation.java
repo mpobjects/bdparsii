@@ -39,6 +39,30 @@ public final class BinaryOperation extends AbstractExpression {
         }
     }
 
+    private static final BigDecimal POW_LOWER_LIMT = BigDecimal.valueOf(-999999999);
+    private static final BigDecimal POW_UPPER_LIMT = BigDecimal.valueOf(999999999);
+
+    /**
+     * power function which uses the JRE's {@link BigDecimal#pow(int, MathContext)} when <code>y</code> is an integer
+     * within range. Otherwise use {@link BigDecimalMath#pow(BigDecimal, BigDecimal, MathContext)}.
+     * 
+     * @param x the {@link BigDecimal} value to take to the power
+     * @param y the {@link BigDecimal} value to serve as exponent
+     * @param mathContext the {@link MathContext} used for the result
+     * @return the calculated x to the power of y with the precision specified in the <code>mathContext</code>
+     */
+    public static BigDecimal pow(BigDecimal x, BigDecimal y, MathContext mathContext) {
+        if (POW_LOWER_LIMT.compareTo(y) < 0 && POW_UPPER_LIMT.compareTo(y) > 0) {
+            try {
+                int intval = y.intValueExact();
+                return x.pow(intval, mathContext);
+            } catch (ArithmeticException e) {
+                // ignore
+            }
+        }
+        return BigDecimalMath.pow(x, y, MathContextGuard.getSafeContext(mathContext));
+    }
+
     private final Op op;
     private Expression left;
     private Expression right;
@@ -137,7 +161,7 @@ public final class BinaryOperation extends AbstractExpression {
             case DIVIDE:
                 return a.divide(b, mathContext);
             case POWER:
-                return BigDecimalMath.pow(a, b, MathContextGuard.getSafeContext(mathContext));
+                return pow(a, b, mathContext);
             case MODULO:
                 return a.remainder(b, mathContext);
             case LT:
