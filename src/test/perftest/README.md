@@ -21,45 +21,47 @@ This will test both parsing/compilation of the expression as execution of the gi
 
 Tested on JDK 1.8.0_102, VM 25.102-b14
 
-[![graph](src/site/jmh-benchmark.png)](http://jmh.morethan.io/?source=https://raw.githubusercontent.com/mpobjects/bdparsii/master/src/test/perftest/src/site/jmh-results.json)
+![DbParsii](src/site/bench-bdparsii.png)
+![Parsii](src/site/bench-parsii.png)
+[Full Results](http://jmh.morethan.io/?source=https://raw.githubusercontent.com/mpobjects/bdparsii/master/src/test/perftest/src/site/jmh-results.json)
 
 ```
-Benchmark               (iterations)  (mathContext)   Mode  Cnt      Score      Error  Units
-FullBenchmark.bdparsii             1      DECIMAL32  thrpt   50  67871.256 ± 1607.253  ops/s
-FullBenchmark.bdparsii             1      DECIMAL64  thrpt   50  42743.208 ±  829.339  ops/s
-FullBenchmark.bdparsii             1     DECIMAL128  thrpt   50  26159.110 ± 1098.821  ops/s
-FullBenchmark.bdparsii             1      UNLIMITED  thrpt   50  41410.504 ± 1160.836  ops/s
-FullBenchmark.bdparsii            10      DECIMAL32  thrpt   50  59741.777 ± 2221.047  ops/s
-FullBenchmark.bdparsii            10      DECIMAL64  thrpt   50  37094.447 ± 1044.740  ops/s
-FullBenchmark.bdparsii            10     DECIMAL128  thrpt   50  24675.890 ±  551.191  ops/s
-FullBenchmark.bdparsii            10      UNLIMITED  thrpt   50  39770.924 ± 1180.890  ops/s
-FullBenchmark.bdparsii           100      DECIMAL32  thrpt   50  31318.059 ±  834.014  ops/s
-FullBenchmark.bdparsii           100      DECIMAL64  thrpt   50  17816.403 ±  543.140  ops/s
-FullBenchmark.bdparsii           100     DECIMAL128  thrpt   50  13674.682 ±  368.600  ops/s
-FullBenchmark.bdparsii           100      UNLIMITED  thrpt   50  27305.518 ±  935.835  ops/s
-FullBenchmark.bdparsii          1000      DECIMAL32  thrpt   50   5831.176 ±  205.718  ops/s
-FullBenchmark.bdparsii          1000      DECIMAL64  thrpt   50   2953.053 ±   82.041  ops/s
-FullBenchmark.bdparsii          1000     DECIMAL128  thrpt   50   2525.055 ±   96.590  ops/s
-FullBenchmark.bdparsii          1000      UNLIMITED  thrpt   50   6585.539 ±  260.105  ops/s
-FullBenchmark.bdparsii         10000      DECIMAL32  thrpt   50    662.146 ±   25.492  ops/s
-FullBenchmark.bdparsii         10000      DECIMAL64  thrpt   50    319.114 ±   11.614  ops/s
-FullBenchmark.bdparsii         10000     DECIMAL128  thrpt   50    314.404 ±    2.512  ops/s
-FullBenchmark.bdparsii         10000      UNLIMITED  thrpt   50    912.307 ±    8.908  ops/s
-FullBenchmark.bdparsii        100000      DECIMAL32  thrpt   50     70.560 ±    0.949  ops/s
-FullBenchmark.bdparsii        100000      DECIMAL64  thrpt   50     34.413 ±    0.656  ops/s
-FullBenchmark.bdparsii        100000     DECIMAL128  thrpt   50     32.008 ±    0.330  ops/s
-FullBenchmark.bdparsii        100000      UNLIMITED  thrpt   50     91.803 ±    0.911  ops/s
-FullBenchmark.bdparsii       1000000      DECIMAL32  thrpt   50      6.766 ±    0.043  ops/s
-FullBenchmark.bdparsii       1000000      DECIMAL64  thrpt   50      3.486 ±    0.020  ops/s
-FullBenchmark.bdparsii       1000000     DECIMAL128  thrpt   50      3.166 ±    0.023  ops/s
-FullBenchmark.bdparsii       1000000      UNLIMITED  thrpt   50      8.196 ±    0.065  ops/s
-FullBenchmark.parsii               1            N/A  thrpt   50  82652.867 ±  668.539  ops/s
-FullBenchmark.parsii              10            N/A  thrpt   50  82592.376 ±  378.592  ops/s
-FullBenchmark.parsii             100            N/A  thrpt   50  77001.606 ±  340.141  ops/s
-FullBenchmark.parsii            1000            N/A  thrpt   50  44898.930 ±  454.332  ops/s
-FullBenchmark.parsii           10000            N/A  thrpt   50   9199.257 ±   84.282  ops/s
-FullBenchmark.parsii          100000            N/A  thrpt   50   1065.391 ±   21.356  ops/s
-FullBenchmark.parsii         1000000            N/A  thrpt   50    109.763 ±    0.982  ops/s
+Benchmark     (iterations)  (mathContext)   Mode  Cnt      Score      Error  Units
+BdParsii.run             1      DECIMAL32  thrpt   50  66226.266 ± 2462.510  ops/s
+BdParsii.run             1      DECIMAL64  thrpt   50  41515.960 ± 1327.682  ops/s
+BdParsii.run             1     DECIMAL128  thrpt   50  25994.950 ±  760.381  ops/s
+BdParsii.run             1      UNLIMITED  thrpt   50  25021.384 ±  987.292  ops/s
+BdParsii.run            10      DECIMAL32  thrpt   50  61302.083 ± 2256.868  ops/s
+BdParsii.run            10      DECIMAL64  thrpt   50  37104.065 ± 1370.380  ops/s
+BdParsii.run            10     DECIMAL128  thrpt   50  23034.369 ±  961.130  ops/s
+BdParsii.run            10      UNLIMITED  thrpt   50  24147.860 ±  917.300  ops/s
+BdParsii.run           100      DECIMAL32  thrpt   50  29865.121 ± 1387.613  ops/s
+BdParsii.run           100      DECIMAL64  thrpt   50  17518.558 ±  715.147  ops/s
+BdParsii.run           100     DECIMAL128  thrpt   50  12930.886 ±  464.285  ops/s
+BdParsii.run           100      UNLIMITED  thrpt   50  18583.318 ±  717.525  ops/s
+BdParsii.run          1000      DECIMAL32  thrpt   50   5461.194 ±  222.383  ops/s
+BdParsii.run          1000      DECIMAL64  thrpt   50   2676.773 ±  102.385  ops/s
+BdParsii.run          1000     DECIMAL128  thrpt   50   2341.103 ±   91.905  ops/s
+BdParsii.run          1000      UNLIMITED  thrpt   50   5466.064 ±  243.679  ops/s
+BdParsii.run         10000      DECIMAL32  thrpt   50    627.821 ±   24.447  ops/s
+BdParsii.run         10000      DECIMAL64  thrpt   50    302.632 ±    8.916  ops/s
+BdParsii.run         10000     DECIMAL128  thrpt   50    270.275 ±   10.661  ops/s
+BdParsii.run         10000      UNLIMITED  thrpt   50    726.906 ±   33.218  ops/s
+BdParsii.run        100000      DECIMAL32  thrpt   50     62.221 ±    2.079  ops/s
+BdParsii.run        100000      DECIMAL64  thrpt   50     30.299 ±    1.085  ops/s
+BdParsii.run        100000     DECIMAL128  thrpt   50     27.735 ±    1.090  ops/s
+BdParsii.run        100000      UNLIMITED  thrpt   50     78.589 ±    2.470  ops/s
+BdParsii.run       1000000      DECIMAL32  thrpt   50      6.080 ±    0.230  ops/s
+BdParsii.run       1000000      DECIMAL64  thrpt   50      3.028 ±    0.101  ops/s
+BdParsii.run       1000000     DECIMAL128  thrpt   50      2.780 ±    0.093  ops/s
+BdParsii.run       1000000      UNLIMITED  thrpt   50      7.003 ±    0.305  ops/s
+Parsii.run               1            N/A  thrpt   50  74488.188 ± 1933.882  ops/s
+Parsii.run              10            N/A  thrpt   50  71236.055 ± 2520.904  ops/s
+Parsii.run             100            N/A  thrpt   50  66520.834 ± 2030.346  ops/s
+Parsii.run            1000            N/A  thrpt   50  36198.600 ± 1095.089  ops/s
+Parsii.run           10000            N/A  thrpt   50   6845.650 ±  251.867  ops/s
+Parsii.run          100000            N/A  thrpt   50    720.350 ±   23.940  ops/s
+Parsii.run         1000000            N/A  thrpt   50     71.022 ±    3.264  ops/s
 ``` 
 
 As these results show, performing BigDecimal calculations are slower than double based calculations.

@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jmh.version>1.19</jmh.version>
+		<jmh.version>1.21</jmh.version>
 	</properties>
 
 	<build>
@@ -49,7 +49,7 @@
 				</executions>
 				<configuration>
 					<mainClass>com.mpobjects.bdparsii.perftest.Main</mainClass>
-					<commandlineArgs>-f 5 -i 10 -wi 10 -rf json -rff ${project.build.directory}${file.separator}jmh-results.json</commandlineArgs>
+					<commandlineArgs>-r 1 -w 1 -f 5 -i 10 -wi 10 -rf json -rff ${project.build.directory}${file.separator}jmh-results.json</commandlineArgs>
 					<systemProperties>
 						<systemProperty>
 							<key>java.class.path</key>
