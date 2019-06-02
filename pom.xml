@@ -78,11 +78,9 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.1.0</version>
+					<version>3.0.0</version>
 					<configuration>
 						<additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin</additionalJOption>
-						<detectLinks />
-						<detectJavaApiLink />
 						<links>
 							<link>https://static.javadoc.io/ch.obermuhlner/big-math/2.1.0</link>
 						</links>
