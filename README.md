@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/mpobjects/bdparsii.svg?branch=master)](https://travis-ci.org/mpobjects/bdparsii)
 [![Maven Central](https://img.shields.io/maven-central/v/com.mpobjects/bdparsii.svg)](https://search.maven.org/search?q=g:com.mpobjects%20AND%20a:bdparsii)
-[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.mpobjects/bdparsii.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/mpobjects/bdparsii/)
-[![Coverage Status](https://coveralls.io/repos/github/mpobjects/bdparsii/badge.svg?branch=master)](https://coveralls.io/github/mpobjects/bdparsii?branch=master)
-[![Vulnerability Scan](https://snyk.io/test/github/mpobjects/bdparsii/badge.svg)](https://snyk.io/test/github/mpobjects/bdparsii)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.mpobjects%3Abdparsii&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.mpobjects%3Abdparsii)
 [![Javadocs](https://www.javadoc.io/badge/com.mpobjects/bdparsii.svg)](https://www.javadoc.io/doc/com.mpobjects/bdparsii)
+[![Vulnerability Scan](https://snyk.io/test/github/mpobjects/bdparsii/badge.svg)](https://snyk.io/test/github/mpobjects/bdparsii)
+[![Build Status](https://travis-ci.org/mpobjects/bdparsii.svg?branch=master)](https://travis-ci.org/mpobjects/bdparsii)
+[![Coverage Status](https://coveralls.io/repos/github/mpobjects/bdparsii/badge.svg?branch=master)](https://coveralls.io/github/mpobjects/bdparsii?branch=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.mpobjects%3Abdparsii&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.mpobjects%3Abdparsii)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.mpobjects/bdparsii.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/mpobjects/bdparsii/)
 
 # bdparsii 
 
