@@ -45,6 +45,6 @@ bdparsii is available from the [maven central repository](https://search.maven.o
 <dependency>
 	<groupId>com.mpobjects</groupId>
 	<artifactId>bdparsii</artifactId>
-	<version>0.2.0</version>
+	<version>1.0.0</version>
 </dependency>
 ```
