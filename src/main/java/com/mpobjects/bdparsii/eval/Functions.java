@@ -213,7 +213,7 @@ public class Functions {
     public static final Function ROUND = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a, MathContext mathContext) {
-            return a.setScale(0, RoundingMode.HALF_EVEN);
+            return a.setScale(0, RoundingMode.HALF_UP);
         }
     };
 
