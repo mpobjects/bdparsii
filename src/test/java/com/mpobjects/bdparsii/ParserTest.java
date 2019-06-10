@@ -49,6 +49,13 @@ public class ParserTest {
         assertEquals(BigDecimal.valueOf(7), Parser.parse("3      +    4").evaluate());
         assertEquals(BigDecimal.valueOf(-1), Parser.parse("3+ -4").evaluate());
         assertEquals(BigDecimal.valueOf(-1), Parser.parse("3+(-4)").evaluate());
+        
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("5%4").evaluate());
+        assertEquals(BigDecimal.valueOf(4), Parser.parse("2^2").evaluate());
+        assertEquals(BigDecimal.valueOf(4), Parser.parse("2**2").evaluate());
+        
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("2=2").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1!=2").evaluate());
     }
 
     @Test
