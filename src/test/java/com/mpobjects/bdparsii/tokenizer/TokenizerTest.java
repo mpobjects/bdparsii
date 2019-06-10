@@ -5,8 +5,6 @@ import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.mpobjects.bdparsii.tokenizer.Token.TokenType;
-
 public class TokenizerTest {
 
     @Test
@@ -36,15 +34,18 @@ public class TokenizerTest {
     public void testKeyword() throws Exception {
         Tokenizer tokenizer = new Tokenizer(new StringReader("foo bar_quux"));
         tokenizer.addKeyword("foo");
-        Assert.assertEquals(TokenType.KEYWORD, tokenizer.current().getType());
-        Assert.assertEquals(TokenType.ID, tokenizer.next().getType());
+        Assert.assertTrue(tokenizer.current().isKeyword("foo"));
+        Assert.assertTrue(tokenizer.next().isIdentifier());
     }
 
     @Test
     public void testSpecialId() throws Exception {
         Tokenizer tokenizer = new Tokenizer(new StringReader("$foo bar_quux"));
         tokenizer.addSpecialIdStarter('$');
-        Assert.assertEquals(TokenType.SPECIAL_ID, tokenizer.current().getType());
-        Assert.assertEquals(TokenType.ID, tokenizer.next().getType());
+        Assert.assertTrue(tokenizer.current().isSpecialIdentifier("$"));
+        Assert.assertTrue(tokenizer.current().isSpecialIdentifierWithContent("$", "foo"));
+        Assert.assertTrue(tokenizer.current().wasTriggeredBy("$"));
+        tokenizer.consume();
+        Assert.assertTrue(tokenizer.current().isIdentifier(""));
     }
 }

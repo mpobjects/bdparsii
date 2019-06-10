@@ -360,7 +360,7 @@ public class Token implements Position {
      * <p>
      * If a list of <tt>values</tt> is given, this method checks that the content matches one of them.
      *
-     * @param values the values to check for. If the list es empty, only the token type is checked.
+     * @param values the values to check for. If the list is empty, only the token type is checked.
      * @return <tt>true</tt> if this token is an identifier and matches one of the given <tt>values</tt> if the list is
      *         not empty.
      */
@@ -381,7 +381,7 @@ public class Token implements Position {
      * <p>
      * If a list of <tt>triggers</tt> is given, this method checks that the trigger matches one of them.
      *
-     * @param triggers the triggers to check for. If the list es empty, only the token type is checked.
+     * @param triggers the triggers to check for. If the list is empty, only the token type is checked.
      * @return <tt>true</tt> if this token is a special identifier and matches one of the given <tt>triggers</tt> if the
      *         list is not empty.
      */
