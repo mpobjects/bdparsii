@@ -49,13 +49,31 @@ public class ParserTest {
         assertEquals(BigDecimal.valueOf(7), Parser.parse("3      +    4").evaluate());
         assertEquals(BigDecimal.valueOf(-1), Parser.parse("3+ -4").evaluate());
         assertEquals(BigDecimal.valueOf(-1), Parser.parse("3+(-4)").evaluate());
-        
+
         assertEquals(BigDecimal.valueOf(1), Parser.parse("5%4").evaluate());
         assertEquals(BigDecimal.valueOf(4), Parser.parse("2^2").evaluate());
         assertEquals(BigDecimal.valueOf(4), Parser.parse("2**2").evaluate());
-        
+    }
+
+    @Test
+    public void simpleLogical() throws ParseException {
         assertEquals(BigDecimal.valueOf(1), Parser.parse("2=2").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("1=2").evaluate());
         assertEquals(BigDecimal.valueOf(1), Parser.parse("1!=2").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("2!=2").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("2>1").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("1>2").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("2>=1").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("1>=2").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1<2").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("2<1").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1<=2").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("2<=1").evaluate());
+
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1&&1").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("1&&0").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("1||0").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("0||0").evaluate());
     }
 
     @Test
@@ -143,6 +161,9 @@ public class ParserTest {
         b.setValue(3);
         assertEquals(BigDecimal.valueOf(18), expr.evaluate());
         assertEquals(BigDecimal.valueOf(18), expr.evaluate());
+
+        expr = Parser.parse("((1+0) * a) + (b * 1)", scope);
+        assertEquals(BigDecimal.valueOf(5), expr.evaluate());
     }
 
     @Test
