@@ -72,8 +72,10 @@ public class ParserTest {
 
         assertEquals(BigDecimal.valueOf(1), Parser.parse("1&&1").evaluate());
         assertEquals(BigDecimal.valueOf(0), Parser.parse("1&&0").evaluate());
+        assertEquals(BigDecimal.valueOf(0), Parser.parse("0&&1").evaluate());
         assertEquals(BigDecimal.valueOf(1), Parser.parse("1||0").evaluate());
         assertEquals(BigDecimal.valueOf(0), Parser.parse("0||0").evaluate());
+        assertEquals(BigDecimal.valueOf(1), Parser.parse("0||1").evaluate());
     }
 
     @Test
@@ -162,8 +164,14 @@ public class ParserTest {
         assertEquals(BigDecimal.valueOf(18), expr.evaluate());
         assertEquals(BigDecimal.valueOf(18), expr.evaluate());
 
-        expr = Parser.parse("((1+0) * a) + (b * 1)", scope);
-        assertEquals(BigDecimal.valueOf(5), expr.evaluate());
+        expr = Parser.parse("(1 + a) + (2 + 1)", scope);
+        assertEquals(BigDecimal.valueOf(6), expr.evaluate());
+        expr = Parser.parse("(1 * a) * (2 * 1)", scope);
+        assertEquals(BigDecimal.valueOf(4), expr.evaluate());
+        expr = Parser.parse("(1 * a) * (1 * b)", scope);
+        assertEquals(BigDecimal.valueOf(6), expr.evaluate());
+        expr = Parser.parse("(a * 1) * (b * 1)", scope);
+        assertEquals(BigDecimal.valueOf(6), expr.evaluate());
     }
 
     @Test
