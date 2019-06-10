@@ -11,7 +11,6 @@ package com.mpobjects.bdparsii.eval;
 import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -419,29 +418,38 @@ public class Parser {
             BigDecimal value = new BigDecimal(tokenizer.consume().getContents());
             if (tokenizer.current().is(Token.TokenType.ID)) {
                 String quantifier = tokenizer.current().getContents().intern();
-                if ("n".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000000000), scope.getMathContext());
-                    tokenizer.consume();
-                } else if ("u".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000000), scope.getMathContext());
-                    tokenizer.consume();
-                } else if ("m".equals(quantifier)) {
-                    value = value.divide(BigDecimal.valueOf(1000), scope.getMathContext());
-                    tokenizer.consume();
-                } else if ("K".equals(quantifier) || "k".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000), scope.getMathContext());
-                    tokenizer.consume();
-                } else if ("M".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000000), scope.getMathContext());
-                    tokenizer.consume();
-                } else if ("G".equals(quantifier)) {
-                    value = value.multiply(BigDecimal.valueOf(1000000000), scope.getMathContext());
-                    tokenizer.consume();
-                } else {
-                    Token token = tokenizer.consume();
-                    errors.add(ParseError.error(token,
-                                                String.format("Unexpected token: '%s'. Expected a valid quantifier.",
-                                                              token.getSource())));
+                switch (quantifier) {
+                    case "n":
+                        value = value.divide(BigDecimal.valueOf(1000000000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    case "u":
+                        value = value.divide(BigDecimal.valueOf(1000000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    case "m":
+                        value = value.divide(BigDecimal.valueOf(1000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    case "k":
+                    case "K":
+                        value = value.multiply(BigDecimal.valueOf(1000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    case "M":
+                        value = value.multiply(BigDecimal.valueOf(1000000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    case "G":
+                        value = value.multiply(BigDecimal.valueOf(1000000000), scope.getMathContext());
+                        tokenizer.consume();
+                        break;
+                    default:
+                        Token token = tokenizer.consume();
+                        errors.add(ParseError
+                                .error(token,
+                                       String.format("Unexpected token: '%s'. Expected a valid quantifier.",
+                                                     token.getSource())));
                 }
             }
             return new Constant(value);

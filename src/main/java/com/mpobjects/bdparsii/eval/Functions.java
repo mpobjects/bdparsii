@@ -11,7 +11,6 @@ package com.mpobjects.bdparsii.eval;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.security.SecureRandom;
 import java.util.List;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
@@ -324,7 +323,7 @@ public class Functions {
     public static final Function RND = new UnaryFunction() {
         @Override
         protected BigDecimal eval(BigDecimal a, MathContext mathContext) {
-            return a.multiply(new BigDecimal(Math.random(), mathContext), mathContext);
+            return a.multiply(BigDecimal.valueOf(Math.random()), mathContext);
         }
     };
 

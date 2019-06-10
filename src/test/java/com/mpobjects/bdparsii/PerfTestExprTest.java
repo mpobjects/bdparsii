@@ -2,6 +2,7 @@ package com.mpobjects.bdparsii;
 
 import java.math.MathContext;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.mpobjects.bdparsii.eval.Expression;
@@ -20,6 +21,7 @@ public class PerfTestExprTest {
         scope.setMathContext(MathContext.UNLIMITED);
         Variable var = scope.create("x");
         Expression expr = Parser.parse("2 + (7 - 5) * 3.14159 * x^(12-10) + sin(-3.141)", scope);
+        Assert.assertNotNull(expr);        
         for (int x = 0; x < 1_000_000; ++x) {
             var.setValue(x);
             expr.evaluate();
