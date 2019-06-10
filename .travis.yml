@@ -6,7 +6,15 @@ branches:
 cache:
   directories:
   - "$HOME/.m2"
+addons:
+  sonarcloud:
+    organization: "mpobjects-github"
+    token:
+      secure: "kXKyddEwaGpuB2IC/qDVEziYIU6+3/EO3sPDlaWpHAUzV5Jlq3JnfbvQiwYWg8aiX7R5Ako2Sdrvy4rV0hTcbhm/TfR4oq3u/y1lHYeoTRHJsU7eFqq/LJMcBDpAb9RW9PpxFpCM5Hb32XZuEZsF6cP4I/7xRZZab6C9RieGtAKF6sJXw+tOd357x7DE4rWC93WFL7edeNv6pV6AnMypsiPCo2ewjFSNB0Dwf7QkMp0fT9PVpqZIdYeSko4LNQVgF0U3MNwrczx1xS4/p08eGi4u7AN5a3CwVCHsd+V4rs+8nAHS3TEWWfyp8F6gPiM3p2oP8UuYW6e8lRIewMW+0kODOBlQ2kKqxilVkJlaFAlYCg3Wx0IdIVnFzyaJFROn0qAzWo7+qxQTW6a7uq+0yPE4GW7Mv+icr1Y6m91bq1VCUNuIDt6n7zzsZo9rqDKpWOZAu738p594k7Y3h6GWCkUC59bfAR68s2z7EAkgu/8hGKm87mfSz4VAKdn8bKXMh5Eb0cEIlZfzlDvPxg5EZGvool6OwKfxI5p5pXZakSaEJhUO0FRAvpsRjyKSeeejqkO7tsCeZHBQeO6Ye7H/UuXEikA2Kq6MmACUsB7dg+Zz+vQ/TgF+2SO2ozc+NREpWG+0Hvxc+knKm6RgVynBBYWUUVqmWIw0+1wJRtezAiU="
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgpg.skip
+script:
+- mvn test -B 
+- mvn sonar:sonar -B
 after_success:
 - mvn jacoco:report coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN
 - openssl aes-256-cbc -pass pass:$ENCRYPTION_PASSWORD -in $GPG_DIR/pubring.gpg.enc -out $GPG_DIR/pubring.gpg -d
