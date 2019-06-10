@@ -222,23 +222,21 @@ public final class BinaryOperation extends AbstractExpression {
             return null;
         }
 
-        // We have a sub-operation with the same operator, let's see if we can pre-compute some constants
-        if (left.isConstant()) {
+        // We have a sub-operation with the same operator, let's see if we can pre-compute some constants.
+        if (left.isConstant() && childOp.left.isConstant()) {
             // Left side is constant, we therefore can combine constants. We can rely on the constant
             // being on the left side, since we reorder commutative operations (see above)
-            if (childOp.left.isConstant()) {
-                if (op == Op.ADD) {
-                    return new BinaryOperation(getMathContext(),
-                                               op,
-                                               new Constant(left.evaluate().add(childOp.left.evaluate())),
-                                               childOp.right);
-                }
-                if (op == Op.MULTIPLY) {
-                    return new BinaryOperation(getMathContext(),
-                                               op,
-                                               new Constant(left.evaluate().multiply(childOp.left.evaluate())),
-                                               childOp.right);
-                }
+            if (op == Op.ADD) {
+                return new BinaryOperation(getMathContext(),
+                                           op,
+                                           new Constant(left.evaluate().add(childOp.left.evaluate())),
+                                           childOp.right);
+            }
+            if (op == Op.MULTIPLY) {
+                return new BinaryOperation(getMathContext(),
+                                           op,
+                                           new Constant(left.evaluate().multiply(childOp.left.evaluate())),
+                                           childOp.right);
             }
         }
 
